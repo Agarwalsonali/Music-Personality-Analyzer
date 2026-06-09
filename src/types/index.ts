@@ -35,6 +35,7 @@ export interface SpotifyTrack {
   external_urls: {
     spotify: string
   }
+  played_at?: string
 }
 
 export interface SpotifyUser {
@@ -55,6 +56,34 @@ export interface SpotifyUser {
   }>
   uri: string
 }
+
+// Paginated Response Wrappers
+export interface PaginatedResponse<T> {
+  href: string
+  limit: number
+  next: string | null
+  offset: number
+  previous: string | null
+  total: number
+  items: T[]
+}
+
+export interface TopTracksResponse extends PaginatedResponse<SpotifyTrack> {}
+
+export interface TopArtistsResponse extends PaginatedResponse<SpotifyArtist> {}
+
+export interface RecentlyPlayedResponse extends PaginatedResponse<{
+  track: SpotifyTrack
+  played_at: string
+  context: {
+    type: string
+    href: string
+    external_urls: {
+      spotify: string
+    }
+    uri: string
+  } | null
+}> {}
 
 // Music Personality Types
 export interface MusicPersonality {

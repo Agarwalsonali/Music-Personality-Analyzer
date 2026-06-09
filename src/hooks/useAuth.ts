@@ -26,7 +26,7 @@ export function useAuth(): AuthState & {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await fetch('/api/auth/user')
+        const response = await fetch('/api/auth/user', { credentials: 'include' })
         if (response.ok) {
           const user = (await response.json()) as SpotifyUserProfile
           setAuthState((prev) => ({
@@ -60,7 +60,7 @@ export function useAuth(): AuthState & {
       setAuthState((prev) => ({ ...prev, loading: true, error: null }))
 
       // Get authorization URL from server (server generates PKCE pair and state)
-      const loginResponse = await fetch('/api/auth/login')
+      const loginResponse = await fetch('/api/auth/login', { credentials: 'include' })
       if (!loginResponse.ok) {
         throw new Error('Failed to initiate login')
       }
@@ -84,7 +84,7 @@ export function useAuth(): AuthState & {
     try {
       setAuthState((prev) => ({ ...prev, loading: true, error: null }))
 
-      await fetch('/api/auth/logout', { method: 'POST' })
+      await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' })
 
       clearPKCESession()
       setAuthState({
@@ -108,7 +108,7 @@ export function useAuth(): AuthState & {
 
   const refreshUser = async () => {
     try {
-      const response = await fetch('/api/auth/user')
+      const response = await fetch('/api/auth/user', { credentials: 'include' })
       if (response.ok) {
         const user = (await response.json()) as SpotifyUserProfile
         setAuthState((prev) => ({

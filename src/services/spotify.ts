@@ -1,4 +1,4 @@
-import { SpotifyArtist, SpotifyTrack, SpotifyUser, SpotifyUserProfile } from '@/types'
+import { SpotifyArtist, SpotifyTrack, SpotifyUser, SpotifyUserProfile, RecentlyPlayedResponse, TopArtistsResponse, TopTracksResponse } from '@/types'
 import { getValidAccessToken } from '@/lib/auth/tokens'
 
 const SPOTIFY_API_BASE = 'https://api.spotify.com/v1'
@@ -31,6 +31,7 @@ class SpotifyService {
     // Fetch token from server (which reads from httpOnly cookies)
     const response = await fetch('/api/spotify' + endpoint, {
       ...options,
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
         ...options.headers,
@@ -51,14 +52,16 @@ class SpotifyService {
     return this.fetchWithAuth('/me')
   }
 
-  async getTopTracks(limit: number = 20, timeRange: 'short_term' | 'medium_term' | 'long_term' = 'medium_term'): Promise<SpotifyTrack[]> {
-    const data = await this.fetchWithAuth(`/me/top/tracks?limit=${limit}&time_range=${timeRange}`)
-    return data.items
+  async getTopTracks(limit: number = 20, timeRange: 'short_term' | 'medium_term' | 'long_term' = 'medium_term'): Promise<TopTracksResponse> {
+    return this.fetchWithAuth(`/me/top/tracks?limit=${limit}&time_range=${timeRange}`)
   }
 
-  async getTopArtists(limit: number = 20, timeRange: 'short_term' | 'medium_term' | 'long_term' = 'medium_term'): Promise<SpotifyArtist[]> {
-    const data = await this.fetchWithAuth(`/me/top/artists?limit=${limit}&time_range=${timeRange}`)
-    return data.items
+  async getTopArtists(limit: number = 20, timeRange: 'short_term' | 'medium_term' | 'long_term' = 'medium_term'): Promise<TopArtistsResponse> {
+    return this.fetchWithAuth(`/me/top/artists?limit=${limit}&time_range=${timeRange}`)
+  }
+
+  async getRecentlyPlayedTracks(limit: number = 20): Promise<RecentlyPlayedResponse> {
+    return this.fetchWithAuth(`/me/player/recently_played?limit=${limit}`)
   }
 
   async getTrackAudioFeatures(trackId: string) {

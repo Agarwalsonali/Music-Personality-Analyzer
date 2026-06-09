@@ -5,7 +5,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server'
-import { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REDIRECT_URI } from '@/lib/auth/constants'
+import { SPOTIFY_CLIENT_ID, SPOTIFY_REDIRECT_URI } from '@/lib/auth/constants'
 
 interface TokenRequestBody {
   grant_type: 'authorization_code'
@@ -71,7 +71,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: new URLSearchParams(tokenRequestBody as Record<string, string>).toString(),
+      body: new URLSearchParams(tokenRequestBody as unknown as Record<string, string>).toString(),
     })
 
     if (!tokenResponse.ok) {
