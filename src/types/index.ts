@@ -1,3 +1,6 @@
+// Re-export auth types
+export type { SpotifyUserProfile, AuthState, TokenResponse, StoredToken, PKCEState } from './auth'
+
 // Spotify API Types
 export interface SpotifyArtist {
   id: string

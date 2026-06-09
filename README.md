@@ -92,8 +92,8 @@ Then edit `.env.local` with your Spotify API credentials:
 ```env
 NEXT_PUBLIC_SPOTIFY_CLIENT_ID=your_spotify_client_id
 SPOTIFY_CLIENT_SECRET=your_spotify_client_secret
-NEXT_PUBLIC_SPOTIFY_REDIRECT_URI=http://localhost:3000/api/auth/callback
-NEXT_PUBLIC_API_BASE_URL=http://localhost:3000/api
+NEXT_PUBLIC_SPOTIFY_REDIRECT_URI=http://127.0.0.1:3000/api/auth/callback
+NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:3000/api
 ```
 
 ### Get Spotify Credentials
@@ -102,7 +102,7 @@ NEXT_PUBLIC_API_BASE_URL=http://localhost:3000/api
 2. Create a new application
 3. Accept the terms and create the app
 4. You'll receive Client ID and Client Secret
-5. Add the redirect URI: `http://localhost:3000/api/auth/callback`
+5. Add the redirect URI: `http://127.0.0.1:3000/api/auth/callback`
 
 ### Running Development Server
 
@@ -110,7 +110,7 @@ NEXT_PUBLIC_API_BASE_URL=http://localhost:3000/api
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://127.0.0.1:3000](http://127.0.0.1:3000) in your browser.
 
 ## 📝 Available Scripts
 

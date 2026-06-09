@@ -1,29 +1,46 @@
-import { SpotifyArtist, SpotifyTrack, SpotifyUser } from '@/types'
+import { SpotifyArtist, SpotifyTrack, SpotifyUser, SpotifyUserProfile } from '@/types'
+import { getValidAccessToken } from '@/lib/auth/tokens'
 
 const SPOTIFY_API_BASE = 'https://api.spotify.com/v1'
 
 class SpotifyService {
-  private accessToken: string | null = null
+  /**
+   * Get current user's profile
+   */
+  async getCurrentUserProfile(): Promise<SpotifyUserProfile> {
+    const response = await fetch('/api/auth/user')
+    if (!response.ok) {
+      throw new Error('Failed to fetch user profile')
+    }
+    return response.json()
+  }
 
-  setAccessToken(token: string) {
-    this.accessToken = token
+  /**
+   * Get valid access token from server-side cookies
+   * For API calls from client that need auth
+   */
+  private async getAccessToken(): Promise<string> {
+    const token = await getValidAccessToken()
+    if (!token) {
+      throw new Error('Access token not available. Please authenticate first.')
+    }
+    return token
   }
 
   private async fetchWithAuth(endpoint: string, options: RequestInit = {}) {
-    if (!this.accessToken) {
-      throw new Error('Access token not set. Please authenticate first.')
-    }
-
-    const response = await fetch(`${SPOTIFY_API_BASE}${endpoint}`, {
+    // Fetch token from server (which reads from httpOnly cookies)
+    const response = await fetch('/api/spotify' + endpoint, {
       ...options,
       headers: {
-        Authorization: `Bearer ${this.accessToken}`,
         'Content-Type': 'application/json',
         ...options.headers,
       },
     })
 
     if (!response.ok) {
+      if (response.status === 401) {
+        throw new Error('Access token expired. Please log in again.')
+      }
       throw new Error(`Spotify API error: ${response.statusText}`)
     }
 

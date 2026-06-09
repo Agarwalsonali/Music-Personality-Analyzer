@@ -4,9 +4,12 @@ import Link from 'next/link'
 import { useTheme } from 'next-themes'
 import { Moon, Sun } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { useAuth } from '@/hooks/useAuth'
+import { UserProfile } from '@/components/auth'
 
 export function Navbar() {
   const { theme, setTheme } = useTheme()
+  const { isAuthenticated, user, loading, logout } = useAuth()
 
   return (
     <nav className="sticky top-0 z-40 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -36,6 +39,20 @@ export function Navbar() {
             <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
             <span className="sr-only">Toggle theme</span>
           </Button>
+
+          {!loading && (
+            <>
+              {isAuthenticated && user ? (
+                <UserProfile user={user} onLogout={logout} />
+              ) : (
+                <Link href="/login">
+                  <Button variant="default" size="sm">
+                    Login
+                  </Button>
+                </Link>
+              )}
+            </>
+          )}
         </div>
       </div>
     </nav>

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Navbar } from '@/components/layout/navbar'
+import { AuthGuard } from '@/components/auth'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
@@ -31,7 +32,7 @@ const mockData = {
 
 const COLORS = ['#1DB954', '#191414', '#1ed760', '#a0ddce']
 
-export default function AnalyzerPage() {
+function AnalyzerContent() {
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [analyzed, setAnalyzed] = useState(false)
 
@@ -214,5 +215,13 @@ export default function AnalyzerPage() {
         </section>
       </main>
     </>
+  )
+}
+
+export default function AnalyzerPage() {
+  return (
+    <AuthGuard>
+      <AnalyzerContent />
+    </AuthGuard>
   )
 }
