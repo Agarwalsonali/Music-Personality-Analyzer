@@ -15,12 +15,14 @@ export function useMusicAnalysis() {
       setError(null)
 
       // Fetch top tracks and artists
-      const [topTracks, topArtists] = await Promise.all([
+      const [topTracksResponse, topArtistsResponse] = await Promise.all([
         spotifyService.getTopTracks(50),
         spotifyService.getTopArtists(50),
       ])
 
-      // Get audio features for all tracks
+      const topTracks = topTracksResponse.items
+      const topArtists = topArtistsResponse.items
+
       const trackIds = topTracks.map((track: SpotifyTrack) => track.id)
       const audioFeatures = await spotifyService.getMultipleTracksAudioFeatures(trackIds)
 

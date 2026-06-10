@@ -9,17 +9,28 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { useAuth } from '@/hooks/useAuth'
 import { SpotifyLoginButton } from './spotify-login-button'
 
+const oauthErrorMessages: Record<string, string> = {
+  state_mismatch:
+    'Login session expired or the app URL does not match your Spotify redirect URI. Open the app at http://127.0.0.1:3000 and try again.',
+  missing_verifier:
+    'Login session expired before Spotify returned. Open the app using the same URL as NEXT_PUBLIC_SPOTIFY_REDIRECT_URI and try again.',
+  missing_code: 'Spotify did not return an authorization code. Please try logging in again.',
+  invalid_grant:
+    'Spotify rejected the authorization code. Check that your redirect URI in .env matches the Spotify Developer Dashboard exactly.',
+  callback_error: 'Something went wrong completing login. Please try again.',
+}
+
 export function LoginPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const { isAuthenticated, loading } = useAuth()
+  const { isAuthenticated, loading, error: authError } = useAuth()
   const [error, setError] = useState<string | null>(null)
 
   // Check for OAuth errors
   useEffect(() => {
     const errorParam = searchParams.get('error')
     if (errorParam) {
-      setError(`Authentication error: ${errorParam}`)
+      setError(oauthErrorMessages[errorParam] ?? `Authentication error: ${errorParam}`)
     }
   }, [searchParams])
 
@@ -53,9 +64,9 @@ export function LoginPage() {
             <p className="text-foreground/60">Discover your music personality through Spotify</p>
           </div>
 
-          {error && (
+          {(error || authError) && (
             <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4">
-              <p className="text-sm text-destructive">{error}</p>
+              <p className="text-sm text-destructive">{error ?? authError}</p>
             </div>
           )}
 

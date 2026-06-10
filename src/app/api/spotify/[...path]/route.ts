@@ -5,14 +5,18 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server'
-
-interface TokenCookie {
-  expiresAt: string
-}
+import { isMockMode } from '@/lib/mock/config'
+import { getMockSpotifyResponse } from '@/lib/mock/spotify-data'
 
 export async function GET(request: NextRequest, { params }: { params: { path: string[] } }): Promise<NextResponse> {
   try {
     const path = params.path.join('/')
+
+    if (isMockMode()) {
+      const data = getMockSpotifyResponse(path, request.nextUrl.searchParams)
+      return NextResponse.json(data, { status: 200 })
+    }
+
     const accessToken = request.cookies.get('spotify_access_token')?.value
 
     if (!accessToken) {

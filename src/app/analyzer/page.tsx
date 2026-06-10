@@ -1,48 +1,63 @@
 'use client'
 
-import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Navbar } from '@/components/layout/navbar'
 import { AuthGuard } from '@/components/auth'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
-
-const mockData = {
-  topGenres: [
-    { name: 'Pop', value: 35 },
-    { name: 'Hip-Hop', value: 25 },
-    { name: 'Electronic', value: 20 },
-    { name: 'Indie', value: 20 },
-  ],
-  audioFeatures: [
-    { name: 'Energy', value: 75 },
-    { name: 'Danceability', value: 65 },
-    { name: 'Valence', value: 55 },
-    { name: 'Acousticness', value: 30 },
-  ],
-  topTracks: [
-    { name: 'Track 1', streams: 1000 },
-    { name: 'Track 2', streams: 850 },
-    { name: 'Track 3', streams: 720 },
-    { name: 'Track 4', streams: 680 },
-    { name: 'Track 5', streams: 600 },
-  ],
-}
+import { useAuth } from '@/hooks/useAuth'
+import { useMusicAnalysis } from '@/hooks/useMusicAnalysis'
+import {
+  BarChart,
+  Bar,
+  LineChart,
+  Line,
+  PieChart,
+  Pie,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts'
 
 const COLORS = ['#1DB954', '#191414', '#1ed760', '#a0ddce']
 
 function AnalyzerContent() {
-  const [isAnalyzing, setIsAnalyzing] = useState(false)
-  const [analyzed, setAnalyzed] = useState(false)
+  const { user } = useAuth()
+  const { loading, error, personality, analyzeMusicPersonality } = useMusicAnalysis()
 
-  const handleAnalyze = async () => {
-    setIsAnalyzing(true)
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-    setIsAnalyzing(false)
-    setAnalyzed(true)
-  }
+  const genreChartData = personality
+    ? Object.entries(
+        personality.topArtists.reduce<Record<string, number>>((acc, artist) => {
+          artist.genres.forEach((genre) => {
+            acc[genre] = (acc[genre] || 0) + 1
+          })
+          return acc
+        }, {})
+      )
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 4)
+        .map(([name, value]) => ({ name, value: value * 10 }))
+    : []
+
+  const audioFeaturesChart = personality
+    ? [
+        { name: 'Energy', value: Math.round(personality.energy * 100) },
+        { name: 'Danceability', value: Math.round(personality.danceability * 100) },
+        { name: 'Valence', value: Math.round(personality.valence * 100) },
+        { name: 'Acousticness', value: Math.round(personality.acousticness * 100) },
+      ]
+    : []
+
+  const topTracksChart = personality
+    ? personality.topTracks.slice(0, 5).map((track) => ({
+        name: track.name,
+        streams: track.popularity * 10,
+      }))
+    : []
 
   return (
     <>
@@ -57,23 +72,35 @@ function AnalyzerContent() {
           >
             <div className="text-center mb-12">
               <h1 className="text-4xl md:text-5xl font-bold mb-4 gradient-text">Music Personality Analysis</h1>
-              <p className="text-muted-foreground text-lg">Connect your Spotify account and discover your unique music profile</p>
+              <p className="text-muted-foreground text-lg">
+                {user?.display_name
+                  ? `Welcome, ${user.display_name}! Discover your unique music profile`
+                  : 'Discover your unique music profile'}
+              </p>
+              {process.env.NEXT_PUBLIC_USE_MOCK_DATA === 'true' && (
+                <p className="text-sm text-primary mt-2">Demo mode — using mock Spotify data</p>
+              )}
             </div>
 
-            {!analyzed ? (
+            {!personality ? (
               <div className="glass-effect rounded-lg p-8 text-center">
                 <div className="mb-8">
                   <div className="text-6xl mb-4">🎵</div>
                   <h2 className="text-2xl font-semibold mb-2">Ready to explore your music personality?</h2>
-                  <p className="text-muted-foreground">Click the button below to connect your Spotify account and start the analysis</p>
+                  <p className="text-muted-foreground">
+                    Run the analysis using demo listening data — no Spotify Premium required
+                  </p>
                 </div>
+                {error && (
+                  <p className="text-sm text-destructive mb-4">{error}</p>
+                )}
                 <Button
                   size="lg"
-                  onClick={handleAnalyze}
-                  disabled={isAnalyzing}
+                  onClick={analyzeMusicPersonality}
+                  disabled={loading}
                   className="w-full sm:w-auto"
                 >
-                  {isAnalyzing ? 'Analyzing...' : 'Connect Spotify & Analyze'}
+                  {loading ? 'Analyzing...' : 'Analyze My Music Personality'}
                 </Button>
               </div>
             ) : (
@@ -83,16 +110,15 @@ function AnalyzerContent() {
                 transition={{ duration: 0.8 }}
                 className="space-y-8"
               >
-                {/* Summary Cards */}
                 <div className="grid md:grid-cols-4 gap-4">
                   {[
-                    { label: 'Primary Genre', value: 'Indie Pop' },
-                    { label: 'Mood', value: 'Energetic' },
-                    { label: 'Top Artist', value: 'Artist Name' },
-                    { label: 'Total Tracks', value: '4,523' },
+                    { label: 'Primary Genre', value: personality.genre },
+                    { label: 'Mood', value: personality.mood },
+                    { label: 'Top Artist', value: personality.topArtists[0]?.name ?? '—' },
+                    { label: 'Top Tracks', value: String(personality.topTracks.length) },
                   ].map((item, index) => (
                     <motion.div
-                      key={index}
+                      key={item.label}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
@@ -102,16 +128,14 @@ function AnalyzerContent() {
                           <CardDescription>{item.label}</CardDescription>
                         </CardHeader>
                         <CardContent>
-                          <div className="text-2xl font-bold">{item.value}</div>
+                          <div className="text-2xl font-bold capitalize">{item.value}</div>
                         </CardContent>
                       </Card>
                     </motion.div>
                   ))}
                 </div>
 
-                {/* Charts */}
                 <div className="grid md:grid-cols-2 gap-8">
-                  {/* Genre Distribution */}
                   <motion.div
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -125,7 +149,7 @@ function AnalyzerContent() {
                         <ResponsiveContainer width="100%" height={300}>
                           <PieChart>
                             <Pie
-                              data={mockData.topGenres}
+                              data={genreChartData}
                               cx="50%"
                               cy="50%"
                               labelLine={false}
@@ -134,7 +158,7 @@ function AnalyzerContent() {
                               fill="#1DB954"
                               dataKey="value"
                             >
-                              {mockData.topGenres.map((_, index) => (
+                              {genreChartData.map((_, index) => (
                                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                               ))}
                             </Pie>
@@ -145,7 +169,6 @@ function AnalyzerContent() {
                     </Card>
                   </motion.div>
 
-                  {/* Audio Features */}
                   <motion.div
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -157,7 +180,7 @@ function AnalyzerContent() {
                       </CardHeader>
                       <CardContent>
                         <ResponsiveContainer width="100%" height={300}>
-                          <BarChart data={mockData.audioFeatures}>
+                          <BarChart data={audioFeaturesChart}>
                             <CartesianGrid strokeDasharray="3 3" stroke="#1e1e1e" />
                             <XAxis dataKey="name" stroke="#666" />
                             <YAxis stroke="#666" />
@@ -170,7 +193,6 @@ function AnalyzerContent() {
                   </motion.div>
                 </div>
 
-                {/* Top Tracks */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -178,11 +200,11 @@ function AnalyzerContent() {
                 >
                   <Card>
                     <CardHeader>
-                      <CardTitle>Top Tracks Streams</CardTitle>
+                      <CardTitle>Top Tracks</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <ResponsiveContainer width="100%" height={300}>
-                        <LineChart data={mockData.topTracks}>
+                        <LineChart data={topTracksChart}>
                           <CartesianGrid strokeDasharray="3 3" stroke="#1e1e1e" />
                           <XAxis dataKey="name" stroke="#666" />
                           <YAxis stroke="#666" />
@@ -195,7 +217,24 @@ function AnalyzerContent() {
                   </Card>
                 </motion.div>
 
-                {/* Action Buttons */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Your Top Tracks</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-3">
+                      {personality.topTracks.map((track, index) => (
+                        <li key={track.id} className="flex items-center justify-between border-b border-border pb-2">
+                          <span>
+                            {index + 1}. {track.name} — {track.artists.map((a) => a.name).join(', ')}
+                          </span>
+                          <span className="text-muted-foreground text-sm">{track.popularity}% popular</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -205,8 +244,14 @@ function AnalyzerContent() {
                   <Button size="lg" className="w-full sm:w-auto">
                     📥 Download Report
                   </Button>
-                  <Button size="lg" variant="outline" className="w-full sm:w-auto" onClick={() => setAnalyzed(false)}>
-                    🔄 New Analysis
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="w-full sm:w-auto"
+                    onClick={analyzeMusicPersonality}
+                    disabled={loading}
+                  >
+                    🔄 Run Again
                   </Button>
                 </motion.div>
               </motion.div>
