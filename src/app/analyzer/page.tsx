@@ -14,6 +14,7 @@ import { AuraReveal } from '@/components/music-aura'
 import { CelebrityTwinCard } from '@/components/celebrity-twin'
 import { TimeMachine } from '@/components/time-machine'
 import { PersonalitySummary } from '@/components/personality-summary/PersonalitySummary'
+import { PremiumPersonalityCard } from '@/components/premium-card'
 import { quickAlterEgo } from '@/lib/alterEgoGenerator'
 import { quickAura } from '@/lib/auraGenerator'
 import { quickCelebrityTwin } from '@/lib/celebrityTwin'
@@ -235,6 +236,22 @@ function AnalyzerContent() {
                     transition={{ delay: 0.275 }}
                   >
                     <PersonalitySummary summary={personalitySummary} />
+                  </motion.div>
+                )}
+
+                {alterEgo && genreDNA && moodSpectrum && aura && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.285 }}
+                  >
+                    <PremiumPersonalityCard
+                      userName={user?.display_name || 'Music Lover'}
+                      alterEgo={alterEgo}
+                      genreDNA={genreDNA}
+                      moodSpectrum={moodSpectrum}
+                      aura={aura}
+                    />
                   </motion.div>
                 )}
 

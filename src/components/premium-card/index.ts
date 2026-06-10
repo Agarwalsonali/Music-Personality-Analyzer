@@ -1,0 +1,1 @@
+export { PremiumPersonalityCard } from './PremiumPersonalityCard'
