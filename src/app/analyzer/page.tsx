@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { useAuth } from '@/hooks/useAuth'
 import { useMusicAnalysis } from '@/hooks/useMusicAnalysis'
 import { GenreDNA } from '@/components/genre-dna'
+import { MoodSpectrum } from '@/components/mood-spectrum'
 import {
   BarChart,
   Bar,
@@ -142,6 +143,21 @@ function AnalyzerContent() {
                   transition={{ delay: 0.2 }}
                 >
                   <GenreDNA artists={personality.topArtists} />
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.25 }}
+                >
+                  <MoodSpectrum
+                    metrics={{
+                      energy: personality.energy,
+                      danceability: personality.danceability,
+                      valence: personality.valence,
+                      acousticness: personality.acousticness,
+                    }}
+                  />
                 </motion.div>
 
                 <div className="grid md:grid-cols-2 gap-8">
