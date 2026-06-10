@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { useAuth } from '@/hooks/useAuth'
 import { useMusicAnalysis } from '@/hooks/useMusicAnalysis'
+import { GenreDNA } from '@/components/genre-dna'
 import {
   BarChart,
   Bar,
@@ -134,6 +135,14 @@ function AnalyzerContent() {
                     </motion.div>
                   ))}
                 </div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                >
+                  <GenreDNA artists={personality.topArtists} />
+                </motion.div>
 
                 <div className="grid md:grid-cols-2 gap-8">
                   <motion.div
