@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Link from 'next/link'
+import { useTheme } from 'next-themes'
 import { Button } from '@/components/ui/button'
 import { Navbar } from '@/components/layout/navbar'
 import { Music, Brain, Sparkles, TrendingUp, Users, Zap, Play, ArrowRight } from 'lucide-react'
@@ -12,6 +13,7 @@ export default function Home() {
   const { scrollYProgress } = useScroll()
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0])
   const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.8])
+  const { theme } = useTheme()
 
   useEffect(() => {
     setIsLoaded(true)
@@ -63,22 +65,22 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-black overflow-hidden">
+      <main className="min-h-screen bg-background overflow-hidden">
         {/* Animated Background */}
         <div className="fixed inset-0 pointer-events-none">
           <motion.div
-            className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl"
+            className={`absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-3xl ${theme === 'dark' ? 'bg-primary/20' : 'bg-primary/10'}`}
             variants={glowVariants}
             animate="animate"
           />
           <motion.div
-            className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/20 rounded-full blur-3xl"
+            className={`absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full blur-3xl ${theme === 'dark' ? 'bg-accent/20' : 'bg-accent/10'}`}
             variants={glowVariants}
             animate="animate"
             transition={{ delay: 1.5 }}
           />
           <motion.div
-            className="absolute top-1/2 left-1/2 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl"
+            className={`absolute top-1/2 left-1/2 w-64 h-64 rounded-full blur-3xl ${theme === 'dark' ? 'bg-purple-500/20' : 'bg-purple-500/10'}`}
             variants={glowVariants}
             animate="animate"
             transition={{ delay: 0.75 }}
@@ -118,7 +120,7 @@ export default function Home() {
             </motion.h1>
 
             <motion.p
-              className="text-lg md:text-2xl text-gray-400 mb-12 max-w-2xl mx-auto"
+              className="text-lg md:text-2xl text-muted-foreground mb-12 max-w-2xl mx-auto"
               variants={itemVariants}
               initial="hidden"
               animate={isLoaded ? 'visible' : 'hidden'}
@@ -146,7 +148,7 @@ export default function Home() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="w-full sm:w-auto text-lg px-8 py-6 rounded-full border-2 border-white/20 hover:border-white/40 backdrop-blur-sm transition-all hover:scale-105"
+                  className="w-full sm:w-auto text-lg px-8 py-6 rounded-full border-2 border-border hover:border-primary/50 backdrop-blur-sm transition-all hover:scale-105"
                 >
                   Learn More
                   <ArrowRight className="w-5 h-5 ml-2" />
@@ -195,7 +197,7 @@ export default function Home() {
                 Powerful Features
               </span>
             </h2>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Everything you need to understand your musical identity
             </p>
           </motion.div>
@@ -210,7 +212,7 @@ export default function Home() {
             {features.map((feature, index) => (
               <motion.div
                 key={index}
-                className="group relative p-8 rounded-3xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-sm hover:border-primary/50 transition-all duration-300"
+                className={`group relative p-8 rounded-3xl backdrop-blur-sm hover:border-primary/50 transition-all duration-300 ${theme === 'dark' ? 'bg-gradient-to-br from-white/5 to-white/0 border border-white/10' : 'bg-gradient-to-br from-black/5 to-black/0 border border-border'}`}
                 variants={itemVariants}
                 whileHover={{ scale: 1.05, y: -10 }}
               >
@@ -220,7 +222,7 @@ export default function Home() {
                   {feature.icon}
                 </motion.div>
                 <h3 className="text-2xl font-bold mb-3">{feature.title}</h3>
-                <p className="text-gray-400">{feature.description}</p>
+                <p className="text-muted-foreground">{feature.description}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -240,7 +242,7 @@ export default function Home() {
                 How It Works
               </span>
             </h2>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Three simple steps to discover your music personality
             </p>
           </motion.div>
@@ -270,7 +272,7 @@ export default function Home() {
                     {index + 1}
                   </motion.div>
                   <h3 className="text-2xl font-bold mb-3">{step.title}</h3>
-                  <p className="text-gray-400">{step.description}</p>
+                  <p className="text-muted-foreground">{step.description}</p>
                 </motion.div>
               ))}
             </motion.div>
@@ -291,7 +293,7 @@ export default function Home() {
                 Your Personality Card
               </span>
             </h2>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               A beautiful, shareable snapshot of your musical identity
             </p>
           </motion.div>
@@ -303,7 +305,7 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <div className="relative bg-gradient-to-br from-purple-900/50 via-pink-900/50 to-orange-900/50 rounded-3xl p-8 md:p-12 border border-white/10 backdrop-blur-sm overflow-hidden">
+            <div className={`relative rounded-3xl p-8 md:p-12 backdrop-blur-sm overflow-hidden ${theme === 'dark' ? 'bg-gradient-to-br from-purple-900/50 via-pink-900/50 to-orange-900/50 border border-white/10' : 'bg-gradient-to-br from-purple-100 via-pink-100 to-orange-100 border border-border'}`}>
               {/* Animated Background Pattern */}
               <div className="absolute inset-0 opacity-30">
                 <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_30%,rgba(168,85,247,0.3),transparent_50%)]" />
@@ -314,20 +316,20 @@ export default function Home() {
                 <div className="flex items-center justify-between mb-8">
                   <div>
                     <h3 className="text-3xl font-black mb-2">The Explorer</h3>
-                    <p className="text-gray-300">Your musical archetype</p>
+                    <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>Your musical archetype</p>
                   </div>
                   <div className="text-6xl">🚀</div>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-6 mb-8">
-                  <div className="bg-black/30 rounded-2xl p-6 backdrop-blur-sm">
+                <div className={`grid md:grid-cols-2 gap-6 mb-8`}>
+                  <div className={`rounded-2xl p-6 backdrop-blur-sm ${theme === 'dark' ? 'bg-black/30' : 'bg-white/50'}`}>
                     <div className="flex items-center gap-3 mb-3">
                       <TrendingUp className="w-5 h-5 text-primary" />
                       <span className="font-semibold">Top Genre</span>
                     </div>
                     <p className="text-2xl font-bold">Indie Rock</p>
                   </div>
-                  <div className="bg-black/30 rounded-2xl p-6 backdrop-blur-sm">
+                  <div className={`rounded-2xl p-6 backdrop-blur-sm ${theme === 'dark' ? 'bg-black/30' : 'bg-white/50'}`}>
                     <div className="flex items-center gap-3 mb-3">
                       <Users className="w-5 h-5 text-accent" />
                       <span className="font-semibold">Listening Style</span>
@@ -336,7 +338,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="bg-black/30 rounded-2xl p-6 backdrop-blur-sm">
+                <div className={`rounded-2xl p-6 backdrop-blur-sm ${theme === 'dark' ? 'bg-black/30' : 'bg-white/50'}`}>
                   <div className="flex items-center gap-3 mb-4">
                     <Brain className="w-5 h-5 text-purple-400" />
                     <span className="font-semibold">Personality Traits</span>
@@ -345,7 +347,7 @@ export default function Home() {
                     {['Curious', 'Open-minded', 'Adventurous', 'Creative', 'Eclectic'].map((trait, i) => (
                       <span
                         key={i}
-                        className="px-4 py-2 rounded-full bg-gradient-to-r from-primary/20 to-accent/20 border border-white/10 text-sm font-medium"
+                        className={`px-4 py-2 rounded-full text-sm font-medium ${theme === 'dark' ? 'bg-gradient-to-r from-primary/20 to-accent/20 border border-white/10' : 'bg-gradient-to-r from-primary/30 to-accent/30 border border-border'}`}
                       >
                         {trait}
                       </span>
@@ -373,7 +375,7 @@ export default function Home() {
               animate="animate"
             />
 
-            <div className="relative bg-gradient-to-br from-black to-gray-900 rounded-3xl p-8 md:p-16 border border-white/10 backdrop-blur-sm overflow-hidden">
+            <div className={`relative rounded-3xl p-8 md:p-16 backdrop-blur-sm overflow-hidden ${theme === 'dark' ? 'bg-gradient-to-br from-black to-gray-900 border border-white/10' : 'bg-gradient-to-br from-white to-gray-100 border border-border'}`}>
               {/* Spotify Logo Animation */}
               <motion.div
                 className="absolute top-8 right-8"
@@ -403,7 +405,7 @@ export default function Home() {
                   </span>
                 </h2>
 
-                <p className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
+                <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">
                   Connect your Spotify account in seconds and get instant insights about your unique musical identity.
                 </p>
 
@@ -422,7 +424,7 @@ export default function Home() {
                   </Link>
                 </motion.div>
 
-                <p className="mt-6 text-sm text-gray-500">
+                <p className="mt-6 text-sm text-muted-foreground">
                   Secure authentication • No data stored • Free to use
                 </p>
               </div>
