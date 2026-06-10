@@ -13,10 +13,14 @@ import { AlterEgoReveal } from '@/components/alter-ego'
 import { AuraReveal } from '@/components/music-aura'
 import { CelebrityTwinCard } from '@/components/celebrity-twin'
 import { TimeMachine } from '@/components/time-machine'
+import { PersonalitySummary } from '@/components/personality-summary/PersonalitySummary'
 import { quickAlterEgo } from '@/lib/alterEgoGenerator'
 import { quickAura } from '@/lib/auraGenerator'
 import { quickCelebrityTwin } from '@/lib/celebrityTwin'
 import { quickTimeMachine } from '@/lib/timeMachine'
+import { quickPersonalitySummary } from '@/lib/personalitySummary'
+import { analyzeGenreDNA } from '@/lib/genreDNA'
+import { analyzeMoodSpectrum } from '@/lib/moodSpectrum'
 import {
   BarChart,
   Bar,
@@ -79,6 +83,21 @@ function AnalyzerContent() {
         personality.acousticness
       )
     : null
+
+  const genreDNA = personality ? analyzeGenreDNA(personality.topArtists) : null
+  const moodSpectrum = personality
+    ? analyzeMoodSpectrum({
+        energy: personality.energy,
+        danceability: personality.danceability,
+        valence: personality.valence,
+        acousticness: personality.acousticness,
+      })
+    : null
+
+  const personalitySummary =
+    alterEgo && genreDNA && moodSpectrum
+      ? quickPersonalitySummary(alterEgo, genreDNA, moodSpectrum)
+      : null
 
   const genreChartData = personality
     ? Object.entries(
@@ -208,6 +227,16 @@ function AnalyzerContent() {
                     }}
                   />
                 </motion.div>
+
+                {personalitySummary && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.275 }}
+                  >
+                    <PersonalitySummary summary={personalitySummary} />
+                  </motion.div>
+                )}
 
                 {alterEgo && (
                   <motion.div
