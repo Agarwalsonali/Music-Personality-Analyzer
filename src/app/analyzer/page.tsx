@@ -9,6 +9,8 @@ import { useAuth } from '@/hooks/useAuth'
 import { useMusicAnalysis } from '@/hooks/useMusicAnalysis'
 import { GenreDNA } from '@/components/genre-dna'
 import { MoodSpectrum } from '@/components/mood-spectrum'
+import { AlterEgoReveal } from '@/components/alter-ego'
+import { quickAlterEgo } from '@/lib/alterEgoGenerator'
 import {
   BarChart,
   Bar,
@@ -30,6 +32,17 @@ const COLORS = ['#1DB954', '#191414', '#1ed760', '#a0ddce']
 function AnalyzerContent() {
   const { user } = useAuth()
   const { loading, error, personality, analyzeMusicPersonality } = useMusicAnalysis()
+
+  const alterEgo = personality
+    ? quickAlterEgo(
+        personality.topArtists,
+        personality.topTracks,
+        personality.energy,
+        personality.danceability,
+        personality.valence,
+        personality.acousticness
+      )
+    : null
 
   const genreChartData = personality
     ? Object.entries(
@@ -159,6 +172,16 @@ function AnalyzerContent() {
                     }}
                   />
                 </motion.div>
+
+                {alterEgo && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                  >
+                    <AlterEgoReveal alterEgo={alterEgo} />
+                  </motion.div>
+                )}
 
                 <div className="grid md:grid-cols-2 gap-8">
                   <motion.div
