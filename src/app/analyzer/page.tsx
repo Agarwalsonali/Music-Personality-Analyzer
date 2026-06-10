@@ -11,8 +11,10 @@ import { GenreDNA } from '@/components/genre-dna'
 import { MoodSpectrum } from '@/components/mood-spectrum'
 import { AlterEgoReveal } from '@/components/alter-ego'
 import { AuraReveal } from '@/components/music-aura'
+import { CelebrityTwinCard } from '@/components/celebrity-twin'
 import { quickAlterEgo } from '@/lib/alterEgoGenerator'
 import { quickAura } from '@/lib/auraGenerator'
+import { quickCelebrityTwin } from '@/lib/celebrityTwin'
 import {
   BarChart,
   Bar,
@@ -52,6 +54,16 @@ function AnalyzerContent() {
         personality.energy,
         personality.valence,
         personality.danceability,
+        personality.acousticness
+      )
+    : null
+
+  const celebrityTwin = personality
+    ? quickCelebrityTwin(
+        personality.topArtists.flatMap(a => a.genres),
+        personality.energy,
+        personality.danceability,
+        personality.valence,
         personality.acousticness
       )
     : null
@@ -202,6 +214,16 @@ function AnalyzerContent() {
                     transition={{ delay: 0.35 }}
                   >
                     <AuraReveal aura={aura} />
+                  </motion.div>
+                )}
+
+                {celebrityTwin && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                  >
+                    <CelebrityTwinCard match={celebrityTwin} />
                   </motion.div>
                 )}
 

@@ -1,0 +1,1 @@
+export { CelebrityTwinCard } from './CelebrityTwinCard'
