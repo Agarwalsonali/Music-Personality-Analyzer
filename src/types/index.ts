@@ -1,6 +1,16 @@
 // Re-export auth types
 export type { SpotifyUserProfile, AuthState, TokenResponse, StoredToken, PKCEState } from './auth'
 
+// Re-export personality engine types
+export type {
+  ArchetypeId,
+  Archetype,
+  GenreScore,
+  ArchetypeScore,
+  PersonalityAnalysisResult,
+  PersonalityEngineInput,
+} from '@/lib/personalityEngine'
+
 // Spotify API Types
 export interface SpotifyArtist {
   id: string

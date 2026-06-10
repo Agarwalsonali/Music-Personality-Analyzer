@@ -10,14 +10,14 @@ import { useAuth } from '@/hooks/useAuth'
 
 export interface SpotifyLoginButtonProps {
   variant?: 'default' | 'secondary' | 'outline' | 'ghost'
-  size?: 'sm' | 'md' | 'lg'
+  size?: 'default' | 'sm' | 'lg'
   className?: string
   fullWidth?: boolean
 }
 
 export function SpotifyLoginButton({
   variant = 'default',
-  size = 'md',
+  size = 'default',
   className,
   fullWidth = false,
 }: SpotifyLoginButtonProps) {

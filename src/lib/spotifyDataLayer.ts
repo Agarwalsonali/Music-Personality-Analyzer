@@ -8,8 +8,8 @@
  * and manage token refresh automatically.
  */
 
-import { spotifyService } from './spotify'
-import { SpotifyUserProfile, SpotifyArtist, SpotifyTrack, TopArtistsResponse, TopTracksResponse, RecentlyPlayedResponse } from '@/types'
+import { spotifyService } from '@/services/spotify'
+import { SpotifyUserProfile, TopArtistsResponse, TopTracksResponse, RecentlyPlayedResponse } from '@/types'
 
 export interface SpotifyDataLayer {
   /**

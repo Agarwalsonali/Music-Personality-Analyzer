@@ -2,7 +2,6 @@
 
 import { useEffect, useState, useCallback } from 'react'
 import { SpotifyUserProfile } from '@/types'
-import { spotifyService } from '@/services/spotify'
 
 interface UseSpotifyProfileReturn {
   profile: SpotifyUserProfile | null
