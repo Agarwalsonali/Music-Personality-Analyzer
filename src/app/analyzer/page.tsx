@@ -12,9 +12,11 @@ import { MoodSpectrum } from '@/components/mood-spectrum'
 import { AlterEgoReveal } from '@/components/alter-ego'
 import { AuraReveal } from '@/components/music-aura'
 import { CelebrityTwinCard } from '@/components/celebrity-twin'
+import { TimeMachine } from '@/components/time-machine'
 import { quickAlterEgo } from '@/lib/alterEgoGenerator'
 import { quickAura } from '@/lib/auraGenerator'
 import { quickCelebrityTwin } from '@/lib/celebrityTwin'
+import { quickTimeMachine } from '@/lib/timeMachine'
 import {
   BarChart,
   Bar,
@@ -60,6 +62,16 @@ function AnalyzerContent() {
 
   const celebrityTwin = personality
     ? quickCelebrityTwin(
+        personality.topArtists.flatMap(a => a.genres),
+        personality.energy,
+        personality.danceability,
+        personality.valence,
+        personality.acousticness
+      )
+    : null
+
+  const timeMachine = personality
+    ? quickTimeMachine(
         personality.topArtists.flatMap(a => a.genres),
         personality.energy,
         personality.danceability,
@@ -224,6 +236,16 @@ function AnalyzerContent() {
                     transition={{ delay: 0.4 }}
                   >
                     <CelebrityTwinCard match={celebrityTwin} />
+                  </motion.div>
+                )}
+
+                {timeMachine && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.45 }}
+                  >
+                    <TimeMachine data={timeMachine} />
                   </motion.div>
                 )}
 
