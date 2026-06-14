@@ -75,13 +75,13 @@ export function LoginPage() {
 
             <p className="text-xs text-foreground/50 text-center">
               We only access your Spotify profile and music history to analyze your music personality.
-              We don't store or share any personal data.
+              We don&apos;t store or share any personal data.
             </p>
           </div>
 
           <div className="border-t border-border pt-6">
             <p className="text-xs text-foreground/60 text-center">
-              Don't have a Spotify account?{' '}
+              Don&apos;t have a Spotify account?{' '}
               <a
                 href="https://www.spotify.com/signup"
                 target="_blank"
