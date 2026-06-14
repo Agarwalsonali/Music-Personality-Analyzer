@@ -595,7 +595,7 @@ export function calculateConfidence(
 export function analyzePersonality(
   input: PersonalityEngineInput
 ): PersonalityAnalysisResult {
-  const { artists, tracks, audioFeatures } = input
+  const { artists, audioFeatures } = input
   
   // Extract and analyze genres
   const genreCounts = extractGenres(artists)

@@ -1,0 +1,102 @@
+Create a Music Aura feature.
+
+Generate aura colors from listening behavior.
+
+Examples:
+
+* Purple + Blue
+* Orange + Red
+* Green + Gold
+
+Requirements:
+
+* Gradient background
+* Aura explanation
+* Animated reveal
+* Modern Spotify Wrapped style design
+
+Return reusable components.
+
+
+Thought for 1s
+I'll create a Music Aura feature that generates aura colors from listening behavior with animated reveals and modern design.
+
+0 / 6 tasks done
+Thought for 1s
+auraGenerator.ts
+new
++245
+Thought for 1s
+2 / 6 tasks done
+Thought for 1s
+AuraCard.tsx
+new
++187
+Thought for 1s
+4 / 6 tasks done
+Thought for 1s
+AuraReveal.tsx
+new
++121
+Thought for 1s
+index.ts
+new
++3
+Thought for 1s
+5 / 6 tasks done
+Thought for 1s
+page.tsx
++2
+Thought for 1s
+page.tsx
++10
+Thought for 1s
+page.tsx
++10
+Thought for 1s
+6 / 6 tasks done
+Thought for 1s
+I've successfully built the Music Aura feature with all requested components:
+
+Created Files
+auraGenerator.ts - Aura generation logic
+
+Generates aura colors based on audio features (energy, valence, danceability, acousticness) and genres
+10 color definitions with meanings and traits (Purple, Blue, Orange, Red, Green, Gold, Pink, Cyan, Indigo, Teal)
+Determines primary color from energy/valence combinations
+Determines secondary color from genres and acousticness
+Creates dynamic gradient backgrounds
+Generates aura intensity (Subtle, Moderate, Vibrant, Intense)
+Includes aura name, description, and traits
+Provides quickAura helper function for easy integration
+AuraCard.tsx - Main card component
+
+Displays aura name with animated gradient circle
+Shows intensity badge
+Aura description with glass effect card
+Trait badges with staggered animations
+Animated background effects (floating orbs, gradient shifts)
+Modern Spotify Wrapped-style design
+Framer Motion animations throughout
+AuraReveal.tsx - Animated reveal component
+
+4-stage reveal animation with icons and text
+Stages: Reading energy → Detecting patterns → Painting aura → Almost revealed → Result
+Smooth transitions between stages
+Animated icon effects (scaling, rotating)
+Dramatic reveal effect
+index.ts - Export file for easy imports
+
+Integration
+Added AuraReveal component to page.tsx - it displays after the AlterEgoReveal component, using the personality data to dynamically generate a unique aura for each user.
+
+Features
+Dynamic Color Generation: Creates unique color combinations like "Purple & Blue Aura" or "Orange & Red Aura" based on listening patterns
+Color Meanings: Each color has associated meanings and personality traits
+Gradient Backgrounds: Dynamic gradients that animate and shift
+Intensity Levels: 4 intensity levels based on energy and danceability
+Animated Reveal: 4-stage reveal animation for dramatic effect
+Modern Design: Spotify Wrapped aesthetic with glass effects, floating orbs, and smooth animations
+Responsive: Works on mobile and desktop
+Reusable: All components are independently usable
+TypeScript: Fully typed with proper interfaces

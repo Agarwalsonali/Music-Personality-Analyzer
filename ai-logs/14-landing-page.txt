@@ -1,0 +1,60 @@
+Create a stunning landing page.
+
+Sections:
+
+* Hero
+* Features
+* How it works
+* Example personality card
+* Spotify login CTA
+
+Design inspiration:
+Spotify Wrapped 2025
+
+Use Framer Motion animations throughout.
+
+Thought for 2s
+I'll create a stunning landing page inspired by Spotify Wrapped 2025 with Framer Motion animations. Let me start by planning the task and examining the current setup.
+
+Created Todo List7 tasks
+Readpage.tsx and package.json
+Thought for 1s
+Readglobals.css and tailwind.config.js
+Thought for 3s
+2 / 5 tasks done
+page.tsx
++387
+-61
+Thought for 2s
+page.tsx
++1
+-1
+5 / 5 tasks done
+Thought for 3s
+I've created a stunning landing page inspired by Spotify Wrapped 2025 with all requested sections and Framer Motion animations throughout.
+
+Sections created:
+
+Hero - Animated background with floating music emojis, gradient text "Your Music, Your Story", and CTA buttons
+Features - Three feature cards with hover animations and Lucide icons (Brain, TrendingUp, Sparkles)
+How It Works - Three-step process with numbered circles and gradient connection line
+Example Personality Card - Beautiful card design showing "The Explorer" archetype with traits, genre, and listening style
+Spotify Login CTA - Green gradient section with rotating Spotify icon and prominent "Connect with Spotify" button
+Spotify Wrapped 2025 design elements:
+
+Dark theme with vibrant gradient backgrounds
+Large, bold typography with gradient text
+Glass morphism effects with backdrop blur
+Animated glowing orbs in the background
+Floating decorative elements
+Rounded cards and buttons
+Green accent color for Spotify branding
+Framer Motion animations:
+
+Scroll-based parallax effects on hero
+Floating animations for decorative elements
+Pulsing glow effects on background orbs
+Staggered entrance animations
+Hover scale and lift effects on cards
+Rotating Spotify logo
+Interactive button press effects

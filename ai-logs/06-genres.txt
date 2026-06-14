@@ -1,0 +1,125 @@
+Build a Genre DNA feature.
+
+Requirements:
+
+* Analyze top artists genres
+* Calculate percentages
+* Determine:
+
+  * Core Genre
+  * Secondary Influence
+  * Hidden Trait
+
+Create:
+
+* Donut chart using Recharts
+* Animated percentage counters
+* Modern Spotify Wrapped design
+* Responsive layout
+
+Return reusable React components.
+
+
+Thought for 2s
+I'll build a Genre DNA feature for your music personality analyzer. Let me start by creating a plan and exploring the existing codebase.
+
+Created Todo List7 tasks
+Thought for 1s
+Explored3 files and searched *.ts
+Thought for 2s
+Read
+index.ts
+Analyzedsrc/components
+Thought for 1s
+2 / 7 tasks done
+Thought for 1s
+genreDNA.ts
+new
++215
+Thought for 1s
+3 / 7 tasks done
+Thought for 1s
+GenreDonutChart.tsx
+new
++76
+Thought for 1s
+AnimatedCounter.tsx
+new
++64
+Thought for 1s
+5 / 7 tasks done
+Thought for 1s
+GenreDNA.tsx
+new
++189
+Thought for 1s
+AnimatedCounter.tsx
++1
+Thought for 2s
+AnimatedCounter.tsx
++1
+Thought for 1s
+AnimatedCounter.tsx
++1
+Thought for 1s
+index.ts
+new
++4
+Thought for 1s
+6 / 7 tasks done
+Thought for 1s
+Searchedanalyzer in /C:/Users/HP/Desktop/Music_personality_analyzer/src/app (2)
+Thought for 1s
+Analyzedsrc/app/analyzer
+Thought for 1s
+Read
+page.tsx
+Thought for 2s
+page.tsx
++1
+Thought for 1s
+page.tsx
++8
+Thought for 2s
+7 / 7 tasks done
+Thought for 3s
+I've successfully built the Genre DNA feature with all requested components:
+
+Created Files
+genreDNA.ts - Genre analysis logic
+
+Analyzes top artists' genres and calculates percentages
+Determines Core Genre, Secondary Influence, and Hidden Trait
+Normalizes genre names for better grouping
+Includes genre descriptions and color mapping
+GenreDonutChart.tsx - Donut chart component
+
+Uses Recharts for visualization
+Custom tooltip with genre name and percentage
+Animated chart entry with smooth transitions
+Center label displaying "Genre DNA"
+AnimatedCounter.tsx - Animated percentage counter
+
+Smooth animation with easing function
+Configurable duration, decimals, and suffix
+Supports custom styling via style prop
+GenreDNA.tsx - Main display component
+
+Modern Spotify Wrapped-inspired design
+Responsive layout (grid system)
+Three genre cards showing Core, Secondary, and Hidden traits
+Full genre breakdown legend
+Gradient backgrounds with glass effects
+Framer Motion animations throughout
+index.ts - Export file for easy imports
+
+Integration
+Added GenreDNA component to page.tsx - it now displays after the initial stats cards when personality analysis is complete.
+
+Features
+Genre Analysis: Calculates percentages from artist genres, groups similar genres
+Visual Design: Spotify Wrapped aesthetic with gradients, blur effects, and animations
+Responsive: Works on mobile and desktop using Tailwind CSS grid
+Reusable: All components are independently usable
+TypeScript: Fully typed with proper interfaces
+

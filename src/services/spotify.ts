@@ -1,7 +1,4 @@
-import { SpotifyArtist, SpotifyTrack, SpotifyUser, SpotifyUserProfile, RecentlyPlayedResponse, TopArtistsResponse, TopTracksResponse } from '@/types'
-import { getValidAccessToken } from '@/lib/auth/tokens'
-
-const SPOTIFY_API_BASE = 'https://api.spotify.com/v1'
+import { SpotifyUser, SpotifyUserProfile, RecentlyPlayedResponse, TopArtistsResponse, TopTracksResponse } from '@/types'
 
 class SpotifyService {
   /**
@@ -13,18 +10,6 @@ class SpotifyService {
       throw new Error('Failed to fetch user profile')
     }
     return response.json()
-  }
-
-  /**
-   * Get valid access token from server-side cookies
-   * For API calls from client that need auth
-   */
-  private async getAccessToken(): Promise<string> {
-    const token = await getValidAccessToken()
-    if (!token) {
-      throw new Error('Access token not available. Please authenticate first.')
-    }
-    return token
   }
 
   private async fetchWithAuth(endpoint: string, options: RequestInit = {}) {
