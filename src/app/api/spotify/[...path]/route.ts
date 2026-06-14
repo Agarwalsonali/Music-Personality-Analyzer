@@ -8,6 +8,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { isMockMode } from '@/lib/mock/config'
 import { getMockSpotifyResponse } from '@/lib/mock/spotify-data'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET(request: NextRequest, { params }: { params: { path: string[] } }): Promise<NextResponse> {
   try {
     const path = params.path.join('/')

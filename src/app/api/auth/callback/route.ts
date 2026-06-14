@@ -8,6 +8,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { SPOTIFY_CLIENT_ID, SPOTIFY_REDIRECT_URI } from '@/lib/auth/constants'
 import { setTokenCookies } from '@/lib/auth/session'
 
+export const dynamic = 'force-dynamic'
+
 interface TokenErrorResponse {
   error: string
   error_description?: string

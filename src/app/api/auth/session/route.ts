@@ -8,6 +8,8 @@ import { clearAuthCookies, resolveAccessToken } from '@/lib/auth/session'
 import { isMockMode } from '@/lib/mock/config'
 import { getMockUserProfile } from '@/lib/mock/spotify-data'
 
+export const dynamic = 'force-dynamic'
+
 interface SpotifyUser {
   id: string
   display_name: string
