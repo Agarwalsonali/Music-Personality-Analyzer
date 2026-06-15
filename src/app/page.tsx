@@ -9,7 +9,6 @@ import { Navbar } from '@/components/layout/navbar'
 import { Music, Brain, Sparkles, TrendingUp, Users, Zap, Play, ArrowRight } from 'lucide-react'
 
 export default function Home() {
-  const [isLoaded, setIsLoaded] = useState(false)
   const { scrollYProgress } = useScroll()
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0])
   const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.8])
@@ -115,7 +114,7 @@ if (!mounted) {
               className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight"
               variants={containerVariants}
               initial="hidden"
-              animate={isLoaded ? 'visible' : 'hidden'}
+              animate='visible'
             >
               <motion.span variants={itemVariants} className="block">
                 Your Music,
@@ -129,7 +128,7 @@ if (!mounted) {
               className="text-lg md:text-2xl text-muted-foreground mb-12 max-w-2xl mx-auto"
               variants={itemVariants}
               initial="hidden"
-              animate={isLoaded ? 'visible' : 'hidden'}
+              animate='visible'
             >
               Discover your unique music personality with AI-powered insights. 
               Like Spotify Wrapped, but deeper and more personal.
@@ -139,7 +138,7 @@ if (!mounted) {
               className="flex flex-col sm:flex-row gap-4 justify-center items-center"
               variants={itemVariants}
               initial="hidden"
-              animate={isLoaded ? 'visible' : 'hidden'}
+              animate='visible'
             >
               <Link href="/analyzer">
                 <Button
