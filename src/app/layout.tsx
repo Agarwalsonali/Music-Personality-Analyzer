@@ -19,28 +19,27 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <head>
         <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                function getTheme() {
-                  const stored = localStorage.getItem('theme');
-                  if (stored) {
-                    return stored;
-                  }
-                  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-                }
-                const theme = getTheme();
-                if (theme === 'dark') {
-                  document.documentElement.classList.add('dark');
-                } else {
-                  document.documentElement.classList.remove('dark');
-                }
-              })();
-            `,
-          }}
-        />
+  dangerouslySetInnerHTML={{
+    __html: `
+      (function() {
+        function getTheme() {
+          const stored = localStorage.getItem('theme');
+          return stored || 'dark';
+        }
+
+        const theme = getTheme();
+
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      })();
+    `,
+  }}
+/>
       </head>
-      <body>
+      <body  className="bg-background text-foreground">
         <AppProviders>{children}</AppProviders>
       </body>
     </html>

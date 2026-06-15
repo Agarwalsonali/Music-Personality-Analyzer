@@ -30,12 +30,12 @@ function ChunkLoadRecovery() {
 export function AppProviders({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider
-      attribute="class"
-      defaultTheme="system"        // ← was "dark", now respects OS preference
-      enableSystem                 // ← reads prefers-color-scheme
-      disableTransitionOnChange    // ← prevents flash on theme switch
-      storageKey="theme"           // ← must match layout.tsx inline script
-    >
+        attribute="class"
+        defaultTheme="dark"
+        enableSystem={false}
+        disableTransitionOnChange
+        storageKey="theme"
+      >
       <AuthProvider>
         <ChunkLoadRecovery />
         {children}

@@ -48,8 +48,8 @@
 
   /* Prevent background flash before hydration */
   html {
-    background-color: hsl(0, 0%, 100%);
-  }
+  background-color: hsl(0, 0%, 0%);
+}
   html.dark {
     background-color: hsl(0, 0%, 0%);
   }

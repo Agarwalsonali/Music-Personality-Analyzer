@@ -15,9 +15,15 @@ export default function Home() {
   const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.8])
   const { theme } = useTheme()
 
-  useEffect(() => {
-    setIsLoaded(true)
-  }, [])
+const [mounted, setMounted] = useState(false)
+
+useEffect(() => {
+  setMounted(true)
+}, [])
+
+if (!mounted) {
+  return null
+}
 
   const containerVariants = {
     hidden: { opacity: 0 },
