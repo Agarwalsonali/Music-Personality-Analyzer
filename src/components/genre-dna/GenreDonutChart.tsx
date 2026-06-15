@@ -27,9 +27,9 @@ export function GenreDonutChart({ data, className = '' }: GenreDonutChartProps) 
     value: item.percentage,
     color: item.color,
   }))
-
+  console.log("Genre Chart Data:", chartData)
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative h-[350px] w-full ${className}`}>
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
           <Pie

@@ -8,9 +8,11 @@ interface MoodRadarChartProps {
   className?: string
 }
 
+
 export function MoodRadarChart({ data, color = '#1DB954', className = '' }: MoodRadarChartProps) {
+  console.log("Mood Radar Data:", data)
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative h-[350px] w-full ${className}`}>
       <ResponsiveContainer width="100%" height="100%">
         <RadarChart data={data}>
           <PolarGrid
@@ -44,5 +46,6 @@ export function MoodRadarChart({ data, color = '#1DB954', className = '' }: Mood
         </RadarChart>
       </ResponsiveContainer>
     </div>
+
   )
 }
