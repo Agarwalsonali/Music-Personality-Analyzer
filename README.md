@@ -284,18 +284,6 @@ For testing, you can add Jest and React Testing Library:
 npm install --save-dev jest @testing-library/react @testing-library/jest-dom
 ```
 
-## 📄 License
-
-This project is open source and available under the MIT License.
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📧 Support
-
-For issues, questions, or suggestions, please open an issue on GitHub or contact the development team.
-
 ---
 
 Made with ❤️ for music lovers everywhere.
