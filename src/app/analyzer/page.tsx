@@ -341,10 +341,10 @@ function AnalyzerContent() {
                       <CardContent>
                         <ResponsiveContainer width="100%" height={300}>
                           <BarChart data={audioFeaturesChart}>
-                            <CartesianGrid strokeDasharray="3 3" stroke="#1e1e1e" />
-                            <XAxis dataKey="name" stroke="#666" />
-                            <YAxis stroke="#666" />
-                            <Tooltip contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333' }} />
+                            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                            <XAxis dataKey="name" stroke="hsl(var(--muted-foreground))" />
+                            <YAxis stroke="hsl(var(--muted-foreground))" />
+                            <Tooltip contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', color: 'hsl(var(--card-foreground))' }} />
                             <Bar dataKey="value" fill="#1DB954" />
                           </BarChart>
                         </ResponsiveContainer>
@@ -365,10 +365,10 @@ function AnalyzerContent() {
                     <CardContent>
                       <ResponsiveContainer width="100%" height={300}>
                         <LineChart data={topTracksChart}>
-                          <CartesianGrid strokeDasharray="3 3" stroke="#1e1e1e" />
-                          <XAxis dataKey="name" stroke="#666" />
-                          <YAxis stroke="#666" />
-                          <Tooltip contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333' }} />
+                          <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                          <XAxis dataKey="name" stroke="hsl(var(--muted-foreground))" />
+                          <YAxis stroke="hsl(var(--muted-foreground))" />
+                          <Tooltip contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', color: 'hsl(var(--card-foreground))' }} />
                           <Legend />
                           <Line type="monotone" dataKey="streams" stroke="#1DB954" strokeWidth={2} />
                         </LineChart>
@@ -401,7 +401,44 @@ function AnalyzerContent() {
                   transition={{ delay: 0.5 }}
                   className="flex flex-col sm:flex-row gap-4 justify-center"
                 >
-                  <Button size="lg" className="w-full sm:w-auto">
+                  <Button 
+                    size="lg" 
+                    className="w-full sm:w-auto"
+                    onClick={() => {
+                      if (!personality) return
+                      const reportText = `
+Music Personality Analysis Report
+==================================
+
+Primary Genre: ${personality.genre}
+Mood: ${personality.mood}
+
+Audio Features:
+- Energy: ${(personality.energy * 100).toFixed(1)}%
+- Danceability: ${(personality.danceability * 100).toFixed(1)}%
+- Valence: ${(personality.valence * 100).toFixed(1)}%
+- Acousticness: ${(personality.acousticness * 100).toFixed(1)}%
+
+Top Artists:
+${personality.topArtists.map((a, i) => `${i + 1}. ${a.name}`).join('\n')}
+
+Top Tracks:
+${personality.topTracks.map((t, i) => `${i + 1}. ${t.name} - ${t.artists.map(a => a.name).join(', ')}`).join('\n')}
+
+Generated on: ${new Date().toLocaleString()}
+                      `.trim()
+                      
+                      const blob = new Blob([reportText], { type: 'text/plain' })
+                      const url = URL.createObjectURL(blob)
+                      const a = document.createElement('a')
+                      a.href = url
+                      a.download = 'music-personality-report.txt'
+                      document.body.appendChild(a)
+                      a.click()
+                      document.body.removeChild(a)
+                      URL.revokeObjectURL(url)
+                    }}
+                  >
                     📥 Download Report
                   </Button>
                   <Button

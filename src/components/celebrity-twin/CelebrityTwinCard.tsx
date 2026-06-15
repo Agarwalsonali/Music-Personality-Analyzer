@@ -15,7 +15,7 @@ function TraitBadge({ trait, index }: { trait: string; index: number }) {
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay: 0.6 + index * 0.1, duration: 0.3 }}
-      className="inline-block px-3 py-1 rounded-full bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 text-purple-200 text-sm font-medium"
+      className="inline-block px-3 py-1 rounded-full bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 text-foreground text-sm font-medium"
     >
       {trait}
     </motion.span>
@@ -41,10 +41,10 @@ function FeatureBar({
       className="space-y-2"
     >
       <div className="flex justify-between text-sm">
-        <span className="text-gray-400">{label}</span>
-        <span className="text-white font-medium">{percentage}%</span>
+        <span className="text-muted-foreground">{label}</span>
+        <span className="text-foreground font-medium">{percentage}%</span>
       </div>
-      <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
+      <div className="h-2 bg-secondary rounded-full overflow-hidden">
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `${percentage}%` }}
@@ -68,8 +68,8 @@ export function CelebrityTwinCard({ match, className = '' }: CelebrityTwinCardPr
         transition={{ duration: 0.5 }}
         className="text-center"
       >
-        <h2 className="text-4xl font-bold text-white mb-2">Your Celebrity Music Twin</h2>
-        <p className="text-gray-400">Based on your listening patterns</p>
+        <h2 className="text-4xl font-bold text-foreground mb-2">Your Celebrity Music Twin</h2>
+        <p className="text-muted-foreground">Based on your listening patterns</p>
       </motion.div>
 
       {/* Main Card */}
@@ -77,7 +77,7 @@ export function CelebrityTwinCard({ match, className = '' }: CelebrityTwinCardPr
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.2, duration: 0.5 }}
-        className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-purple-900/30 to-pink-900/30 backdrop-blur-sm border border-purple-500/30 p-8"
+        className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-purple-900/30 to-pink-900/30 backdrop-blur-sm border border-purple-500/30 p-8 dark:from-purple-900/30 dark:to-pink-900/30 dark:border-purple-500/30 from-purple-500/10 to-pink-500/10 border-purple-500/20"
       >
         {/* Decorative elements */}
         <div
@@ -107,7 +107,7 @@ export function CelebrityTwinCard({ match, className = '' }: CelebrityTwinCardPr
             </motion.div>
             
             <div className="flex-1 text-center md:text-left">
-              <h3 className="text-4xl font-bold text-white mb-2">{celebrity.name}</h3>
+              <h3 className="text-4xl font-bold text-foreground mb-2">{celebrity.name}</h3>
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -129,9 +129,9 @@ export function CelebrityTwinCard({ match, className = '' }: CelebrityTwinCardPr
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.5 }}
-            className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 mb-8"
+            className="bg-card/50 backdrop-blur-sm rounded-2xl p-6 border border-border mb-8"
           >
-            <p className="text-white text-lg leading-relaxed">{explanation}</p>
+            <p className="text-foreground text-lg leading-relaxed">{explanation}</p>
           </motion.div>
 
           {/* Feature Alignment */}
@@ -139,9 +139,9 @@ export function CelebrityTwinCard({ match, className = '' }: CelebrityTwinCardPr
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.55, duration: 0.5 }}
-            className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 mb-8"
+            className="bg-card/50 backdrop-blur-sm rounded-2xl p-6 border border-border mb-8"
           >
-            <h4 className="text-white font-semibold mb-4">Feature Alignment</h4>
+            <h4 className="text-foreground font-semibold mb-4">Feature Alignment</h4>
             <div className="space-y-4">
               <FeatureBar label="Energy" value={featureAlignment.energy} delay={0.6} />
               <FeatureBar label="Danceability" value={featureAlignment.danceability} delay={0.65} />
@@ -156,9 +156,9 @@ export function CelebrityTwinCard({ match, className = '' }: CelebrityTwinCardPr
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.5 }}
-              className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 mb-8"
+              className="bg-card/50 backdrop-blur-sm rounded-2xl p-6 border border-border mb-8"
             >
-              <h4 className="text-white font-semibold mb-4">Shared Genres</h4>
+              <h4 className="text-muted-foreground font-semibold mb-4">Shared Genres</h4>
               <div className="flex flex-wrap gap-2">
                 {sharedGenres.map((genre, index) => (
                   <motion.span
@@ -166,7 +166,7 @@ export function CelebrityTwinCard({ match, className = '' }: CelebrityTwinCardPr
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.85 + index * 0.05, duration: 0.3 }}
-                    className="inline-block px-3 py-1 rounded-full bg-purple-500/20 border border-purple-500/30 text-purple-200 text-sm"
+                    className="inline-block px-3 py-1 rounded-full bg-purple-500/20 border border-purple-500/30 text-foreground text-sm"
                   >
                     {genre}
                   </motion.span>
@@ -181,7 +181,7 @@ export function CelebrityTwinCard({ match, className = '' }: CelebrityTwinCardPr
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9, duration: 0.5 }}
           >
-            <h4 className="text-white font-semibold mb-4 text-center">Celebrity Traits</h4>
+            <h4 className="text-muted-foreground font-semibold mb-4 text-center">Celebrity Traits</h4>
             <div className="flex flex-wrap justify-center gap-3">
               {celebrity.traits.map((trait, index) => (
                 <TraitBadge key={trait} trait={trait} index={index} />

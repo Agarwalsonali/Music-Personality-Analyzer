@@ -29,19 +29,19 @@ function MetricCard({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.5 }}
-      className="relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 p-4"
+      className="relative overflow-hidden rounded-xl bg-gradient-to-br from-card/50 to-secondary/50 backdrop-blur-sm border border-border p-4"
     >
       <div className="flex items-center gap-3">
         <span className="text-2xl">{icon}</span>
         <div className="flex-1">
-          <p className="text-gray-400 text-xs font-medium uppercase tracking-wider">
+          <p className="text-muted-foreground text-xs font-medium uppercase tracking-wider">
             {label}
           </p>
           <AnimatedCounter
             value={value * 100}
             decimals={0}
             suffix="%"
-            className="text-xl font-bold text-white"
+            className="text-xl font-bold text-foreground"
           />
         </div>
       </div>
@@ -55,7 +55,7 @@ function TraitBadge({ trait, index }: { trait: string; index: number }) {
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay: 0.6 + index * 0.1, duration: 0.3 }}
-      className="inline-block px-3 py-1 rounded-full bg-gradient-to-r from-gray-700 to-gray-800 border border-gray-600 text-sm text-gray-200"
+      className="inline-block px-3 py-1 rounded-full bg-gradient-to-r from-secondary to-card border border-border text-sm text-foreground"
     >
       {trait}
     </motion.span>
@@ -99,8 +99,8 @@ export function MoodSpectrum({ metrics, className = '' }: MoodSpectrumProps) {
         transition={{ duration: 0.5 }}
         className="text-center"
       >
-        <h2 className="text-4xl font-bold text-white mb-2">Mood Spectrum</h2>
-        <p className="text-gray-400">
+        <h2 className="text-4xl font-bold text-foreground mb-2">Mood Spectrum</h2>
+        <p className="text-muted-foreground">
           Understanding the emotional landscape of your music
         </p>
       </motion.div>
@@ -112,7 +112,7 @@ export function MoodSpectrum({ metrics, className = '' }: MoodSpectrumProps) {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2, duration: 0.5 }}
-          className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-sm border border-gray-700/50 p-8"
+          className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-card/30 to-secondary/30 backdrop-blur-sm border border-border p-8"
         >
           <div className="aspect-square max-w-[350px] mx-auto">
             <MoodRadarChart data={radarData} color={intensityColor} />
@@ -126,14 +126,14 @@ export function MoodSpectrum({ metrics, className = '' }: MoodSpectrumProps) {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3, duration: 0.5 }}
-            className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 p-6"
+            className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-card/50 to-secondary/50 backdrop-blur-sm border border-border p-6"
           >
             <div
               className="absolute top-0 right-0 w-32 h-32 opacity-10"
               style={{ background: intensityColor, filter: 'blur(60px)' }}
             />
             
-            <p className="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">
+            <p className="text-muted-foreground text-xs font-semibold uppercase tracking-wider mb-2">
               Primary Mood
             </p>
             
@@ -144,7 +144,7 @@ export function MoodSpectrum({ metrics, className = '' }: MoodSpectrumProps) {
               {interpretation.primaryMood}
             </h3>
             
-            <p className="text-gray-300 text-sm leading-relaxed">
+            <p className="text-foreground text-sm leading-relaxed">
               {interpretation.description}
             </p>
           </motion.div>
@@ -155,12 +155,12 @@ export function MoodSpectrum({ metrics, className = '' }: MoodSpectrumProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.5 }}
-              className="relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 p-4"
+              className="relative overflow-hidden rounded-xl bg-gradient-to-br from-card/50 to-secondary/50 backdrop-blur-sm border border-border p-4"
             >
-              <p className="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">
+              <p className="text-muted-foreground text-xs font-semibold uppercase tracking-wider mb-2">
                 Secondary
               </p>
-              <p className="text-white text-lg font-semibold">
+              <p className="text-foreground text-lg font-semibold">
                 {interpretation.secondaryMood}
               </p>
             </motion.div>
@@ -169,9 +169,9 @@ export function MoodSpectrum({ metrics, className = '' }: MoodSpectrumProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.45, duration: 0.5 }}
-              className="relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 p-4"
+              className="relative overflow-hidden rounded-xl bg-gradient-to-br from-card/50 to-secondary/50 backdrop-blur-sm border border-border p-4"
             >
-              <p className="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">
+              <p className="text-muted-foreground text-xs font-semibold uppercase tracking-wider mb-2">
                 Intensity
               </p>
               <p
@@ -188,9 +188,9 @@ export function MoodSpectrum({ metrics, className = '' }: MoodSpectrumProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.5 }}
-            className="relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 p-4"
+            className="relative overflow-hidden rounded-xl bg-gradient-to-br from-card/50 to-secondary/50 backdrop-blur-sm border border-border p-4"
           >
-            <p className="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-3">
+            <p className="text-muted-foreground text-xs font-semibold uppercase tracking-wider mb-3">
               Personality Traits
             </p>
             <div className="flex flex-wrap gap-2">

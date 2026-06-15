@@ -20,7 +20,7 @@ function ColorSwatch({ color, label, delay }: { color: string; label: string; de
         className="w-12 h-12 rounded-full border-2 border-white/20 shadow-lg"
         style={{ backgroundColor: color }}
       />
-      <span className="text-xs text-gray-400">{label}</span>
+      <span className="text-xs text-muted-foreground">{label}</span>
     </motion.div>
   )
 }
@@ -37,8 +37,8 @@ export function AlterEgoCard({ alterEgo, className = '' }: AlterEgoCardProps) {
         transition={{ duration: 0.5 }}
         className="text-center"
       >
-        <h2 className="text-4xl font-bold text-white mb-2">Your Music Alter Ego</h2>
-        <p className="text-gray-400">Based on your unique listening patterns</p>
+        <h2 className="text-4xl font-bold text-foreground mb-2">Your Music Alter Ego</h2>
+        <p className="text-muted-foreground">Based on your unique listening patterns</p>
       </motion.div>
 
       {/* Main Card */}
@@ -72,8 +72,8 @@ export function AlterEgoCard({ alterEgo, className = '' }: AlterEgoCardProps) {
             <p className="text-sm font-semibold uppercase tracking-wider mb-2" style={{ color: colorPalette.accent }}>
               {archetype}
             </p>
-            <h3 className="text-5xl font-bold text-white mb-4">{name}</h3>
-            <p className="text-lg text-white/90 leading-relaxed max-w-2xl mx-auto">
+            <h3 className="text-5xl font-bold text-foreground mb-4">{name}</h3>
+            <p className="text-lg text-foreground/90 leading-relaxed max-w-2xl mx-auto">
               {description}
             </p>
           </motion.div>
@@ -89,10 +89,10 @@ export function AlterEgoCard({ alterEgo, className = '' }: AlterEgoCardProps) {
               <div className="flex items-start gap-3">
                 <span className="text-2xl">💪</span>
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-white/70 mb-1">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-foreground/70 mb-1">
                     Strength
                   </p>
-                  <p className="text-white font-medium">{strength}</p>
+                  <p className="text-foreground font-medium">{strength}</p>
                 </div>
               </div>
             </motion.div>
@@ -106,10 +106,10 @@ export function AlterEgoCard({ alterEgo, className = '' }: AlterEgoCardProps) {
               <div className="flex items-start gap-3">
                 <span className="text-2xl">⚡</span>
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-white/70 mb-1">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-foreground/70 mb-1">
                     Weakness
                   </p>
-                  <p className="text-white font-medium">{weakness}</p>
+                  <p className="text-foreground font-medium">{weakness}</p>
                 </div>
               </div>
             </motion.div>
@@ -122,7 +122,7 @@ export function AlterEgoCard({ alterEgo, className = '' }: AlterEgoCardProps) {
             transition={{ delay: 0.5, duration: 0.5 }}
             className="bg-white/10 backdrop-blur-sm rounded-2xl p-5 border border-white/20"
           >
-            <p className="text-xs font-semibold uppercase tracking-wider text-white/70 mb-4 text-center">
+            <p className="text-xs font-semibold uppercase tracking-wider text-foreground/70 mb-4 text-center">
               Color Palette
             </p>
             <div className="flex justify-center gap-6">
@@ -141,7 +141,7 @@ export function AlterEgoCard({ alterEgo, className = '' }: AlterEgoCardProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.5 }}
-          className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 p-6"
+          className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-border p-6"
         >
           <div className="flex items-center gap-4">
             {soundtrack.album?.images[0] && (
@@ -152,11 +152,11 @@ export function AlterEgoCard({ alterEgo, className = '' }: AlterEgoCardProps) {
               />
             )}
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1">
+              <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
                 Theme Song
               </p>
-              <p className="text-white font-semibold truncate">{soundtrack.name}</p>
-              <p className="text-gray-400 text-sm truncate">
+              <p className="text-foreground font-semibold truncate">{soundtrack.name}</p>
+              <p className="text-muted-foreground text-sm truncate">
                 {soundtrack.artists.map(a => a.name).join(', ')}
               </p>
             </div>
@@ -164,7 +164,7 @@ export function AlterEgoCard({ alterEgo, className = '' }: AlterEgoCardProps) {
               href={soundtrack.external_urls.spotify}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg transition-colors"
+              className="px-4 py-2 bg-green-500 hover:bg-green-600 text-foreground font-semibold rounded-lg transition-colors"
             >
               Listen
             </a>

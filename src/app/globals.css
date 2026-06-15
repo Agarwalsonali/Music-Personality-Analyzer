@@ -70,7 +70,7 @@
   }
 
   .glass-effect {
-    @apply bg-card/40 backdrop-blur-md border border-white/10;
+    @apply bg-card backdrop-blur-md border border-white/10;
   }
 
   .gradient-text {

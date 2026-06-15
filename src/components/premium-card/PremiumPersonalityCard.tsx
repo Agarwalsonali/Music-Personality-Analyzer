@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import { toPng } from 'html-to-image'
+import html2canvas from 'html2canvas'
 import { Download, Share2, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import type { AlterEgo } from '@/lib/alterEgoGenerator'
@@ -28,38 +28,80 @@ export function PremiumPersonalityCard({
   const [isDownloading, setIsDownloading] = useState(false)
 
   const handleDownload = async () => {
-    if (!cardRef.current) return
-    
-    setIsDownloading(true)
-    try {
-      const dataUrl = await toPng(cardRef.current, {
-        quality: 1,
-        backgroundColor: '#000000',
-      })
-      
-      const link = document.createElement('a')
-      link.download = `music-personality-${userName.replace(/\s+/g, '-').toLowerCase()}.png`
-      link.href = dataUrl
-      link.click()
-    } catch (error) {
-      console.error('Failed to download image:', error)
-    } finally {
-      setIsDownloading(false)
-    }
-  }
+  if (!cardRef.current) return
 
+  try {
+    setIsDownloading(true)
+
+    await document.fonts.ready
+
+    const element = cardRef.current
+
+    // Temporarily set fixed dimensions for export
+    const originalStyle = element.style.cssText
+    element.style.width = '1080px'
+    element.style.height = '1920px'
+    element.style.aspectRatio = ''
+
+    console.log('clientHeight', element.clientHeight)
+    console.log('scrollHeight', element.scrollHeight)
+    console.log('offsetHeight', element.offsetHeight)
+
+    const canvas = await html2canvas(element, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: '#000000',
+      width: 1080,
+      height: 1920,
+      windowWidth: 1080,
+      windowHeight: 1920,
+    })
+
+    // Restore original style
+    element.style.cssText = originalStyle
+
+    const link = document.createElement('a')
+    link.download = `music-personality-${userName}.png`
+    link.href = canvas.toDataURL('image/png', 1.0)
+    link.click()
+  } catch (err) {
+    console.error(err)
+  } finally {
+    setIsDownloading(false)
+  }
+}
   const handleShare = async () => {
     if (!cardRef.current) return
-    
+
     try {
-      const dataUrl = await toPng(cardRef.current, {
-        quality: 1,
+      await document.fonts.ready
+
+      const element = cardRef.current
+
+      // Temporarily set fixed dimensions for export
+      const originalStyle = element.style.cssText
+      element.style.width = '1080px'
+      element.style.height = '1920px'
+      element.style.aspectRatio = ''
+
+      const canvas = await html2canvas(element, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
         backgroundColor: '#000000',
+        width: 1080,
+        height: 1920,
+        windowWidth: 1080,
+        windowHeight: 1920,
       })
-      
+
+      // Restore original style
+      element.style.cssText = originalStyle
+
+      const dataUrl = canvas.toDataURL('image/png', 1.0)
       const blob = await (await fetch(dataUrl)).blob()
       const file = new File([blob], 'music-personality.png', { type: 'image/png' })
-      
+
       if (navigator.share && navigator.canShare({ files: [file] })) {
         await navigator.share({
           title: 'My Music Personality',
@@ -102,10 +144,12 @@ export function PremiumPersonalityCard({
 
       {/* Premium Card - Instagram Story Friendly */}
       <div
+        data-export-card
         ref={cardRef}
-        className="relative w-full max-w-md mx-auto aspect-[9/16] bg-gradient-to-br from-purple-900 via-black to-pink-900 rounded-3xl overflow-hidden shadow-2xl"
+        className="relative bg-gradient-to-br from-purple-900 via-black to-pink-900 rounded-3xl overflow-hidden shadow-2xl w-full max-w-md mx-auto"
         style={{
-          fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
+          aspectRatio: '9/16',
+          fontFamily: 'Inter, sans-serif',
         }}
       >
         {/* Animated Background Elements */}

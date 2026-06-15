@@ -64,7 +64,7 @@ function RevealStage({ stage, onComplete }: { stage: number; onComplete: () => v
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
-        className="text-xl text-white font-semibold"
+        className="text-xl text-foreground font-semibold"
       >
         {currentStage.text}
       </motion.p>
@@ -99,7 +99,7 @@ export function AlterEgoReveal({ alterEgo, className = '' }: AlterEgoRevealProps
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 p-12"
+            className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-card/50 to-secondary/50 backdrop-blur-sm border border-border p-12"
           >
             <RevealStage stage={stage} onComplete={() => {}} />
           </motion.div>

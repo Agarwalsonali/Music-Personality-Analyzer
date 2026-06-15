@@ -32,14 +32,14 @@ function GenreCard({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.5 }}
-      className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 p-6"
+      className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-card/50 to-secondary/50 backdrop-blur-sm border border-border p-6"
     >
       <div
         className="absolute top-0 right-0 w-32 h-32 opacity-10"
         style={{ background: color, filter: 'blur(60px)' }}
       />
       
-      <p className="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">
+      <p className="text-muted-foreground text-xs font-semibold uppercase tracking-wider mb-2">
         {title}
       </p>
       
@@ -50,7 +50,7 @@ function GenreCard({
         {formatGenreName(genre)}
       </h3>
       
-      <p className="text-gray-400 text-sm mb-3">{description}</p>
+      <p className="text-muted-foreground text-sm mb-3">{description}</p>
       
       <div className="flex items-baseline gap-1">
         <AnimatedCounter
@@ -87,14 +87,14 @@ function GenreLegendItem({
         style={{ backgroundColor: color }}
       />
       <div className="flex-1 min-w-0">
-        <p className="text-white text-sm font-medium truncate">
+        <p className="text-foreground text-sm font-medium truncate">
           {formatGenreName(genre)}
         </p>
       </div>
       <AnimatedCounter
         value={percentage}
         decimals={1}
-        className="text-gray-400 text-sm font-medium"
+        className="text-muted-foreground text-sm font-medium"
       />
     </motion.div>
   )
@@ -112,8 +112,8 @@ export function GenreDNA({ artists, className = '' }: GenreDNAProps) {
         transition={{ duration: 0.5 }}
         className="text-center"
       >
-        <h2 className="text-4xl font-bold text-white mb-2">Genre DNA</h2>
-        <p className="text-gray-400">
+        <h2 className="text-4xl font-bold text-foreground mb-2">Genre DNA</h2>
+        <p className="text-muted-foreground">
           Based on your top {analysis.totalArtists} artists
         </p>
       </motion.div>
@@ -125,7 +125,7 @@ export function GenreDNA({ artists, className = '' }: GenreDNAProps) {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2, duration: 0.5 }}
-          className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-sm border border-gray-700/50 p-8"
+          className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-card/30 to-secondary/30 backdrop-blur-sm border border-border p-8"
         >
           <div className="aspect-square max-w-[300px] mx-auto">
             <GenreDonutChart data={analysis.allGenres} />
@@ -168,9 +168,9 @@ export function GenreDNA({ artists, className = '' }: GenreDNAProps) {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.7, duration: 0.5 }}
-        className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-sm border border-gray-700/50 p-6"
+        className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-card/30 to-secondary/30 backdrop-blur-sm border border-border p-6"
       >
-        <h3 className="text-white font-semibold mb-4">Full Genre Breakdown</h3>
+        <h3 className="text-foreground font-semibold mb-4">Full Genre Breakdown</h3>
         <div className="space-y-1">
           {analysis.allGenres.map((segment, index) => (
             <GenreLegendItem

@@ -34,6 +34,19 @@ export function PersonalitySummary({ summary }: PersonalitySummaryProps) {
     }
   }
 
+  const handleDownload = () => {
+    const text = summary.paragraphs.join('\n\n')
+    const blob = new Blob([text], { type: 'text/plain' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = 'music-personality-summary.txt'
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -101,6 +114,7 @@ export function PersonalitySummary({ summary }: PersonalitySummaryProps) {
             <Button
               variant="outline"
               size="sm"
+              onClick={handleDownload}
               className="flex items-center gap-2"
             >
               <Download className="h-4 w-4" />
