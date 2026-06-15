@@ -27,6 +27,9 @@ export async function GET(_request: NextRequest): Promise<NextResponse> {
       { status: 200 }
     )
 
+    // Clear logged_out cookie when user initiates login (for mock mode)
+    response.cookies.delete('logged_out')
+
     // Store PKCE pair in secure httpOnly cookies
     // The values are only sent to the server, never exposed to JavaScript
     response.cookies.set('pkce_verifier', codeVerifier, {

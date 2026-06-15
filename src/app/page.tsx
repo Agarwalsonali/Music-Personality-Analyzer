@@ -9,20 +9,19 @@ import { Navbar } from '@/components/layout/navbar'
 import { Music, Brain, Sparkles, TrendingUp, Users, Zap, Play, ArrowRight } from 'lucide-react'
 
 export default function Home() {
+  const [mounted, setMounted] = useState(false)
   const { scrollYProgress } = useScroll()
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0])
   const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.8])
   const { theme } = useTheme()
 
-const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
-useEffect(() => {
-  setMounted(true)
-}, [])
-
-if (!mounted) {
-  return null
-}
+  if (!mounted) {
+    return null
+  }
 
   const containerVariants = {
     hidden: { opacity: 0 },

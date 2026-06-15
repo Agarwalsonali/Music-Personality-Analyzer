@@ -24,8 +24,15 @@ interface SpotifyUser {
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
-    if (isMockMode()) {
+    // Check if user has explicitly logged out (even in mock mode)
+    const hasLoggedOut = request.cookies.has('logged_out')
+    
+    if (isMockMode() && !hasLoggedOut) {
       return NextResponse.json({ authenticated: true, user: getMockUserProfile() }, { status: 200 })
+    }
+    
+    if (hasLoggedOut) {
+      return NextResponse.json({ authenticated: false }, { status: 200 })
     }
 
     const hasSession =
@@ -83,6 +90,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const user = (await spotifyResponse.json()) as SpotifyUser
     const response = NextResponse.json({ authenticated: true, user }, { status: 200 })
     cookieUpdater(response)
+    response.cookies.delete('logged_out')
     return response
   } catch (error) {
     console.error('Session endpoint error:', error)

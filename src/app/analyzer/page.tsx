@@ -133,8 +133,8 @@ function AnalyzerContent() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-gradient-to-br from-background via-secondary/20 to-background py-20">
-        <section className="container-custom">
+      <main className="min-h-screen bg-gradient-to-br from-background via-secondary/20 to-background">
+        <section className="container-custom py-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

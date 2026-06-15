@@ -95,7 +95,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logout = async () => {
     try {
       setAuthState((prev) => ({ ...prev, loading: true, error: null }))
-      await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' })
+      
+      // Clear local state first
       clearPKCESession()
       setAuthState({
         isAuthenticated: false,
@@ -105,6 +106,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         loading: false,
         error: null,
       })
+      
+      // Then clear server-side session
+      await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' })
+      
+      // Redirect to landing page
+      window.location.href = '/'
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Logout failed'
       setAuthState((prev) => ({

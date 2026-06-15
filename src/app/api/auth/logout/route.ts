@@ -17,6 +17,14 @@ export async function POST(_request: NextRequest): Promise<NextResponse> {
   response.cookies.delete('spotify_token_expires_at')
   response.cookies.delete('pkce_verifier')
   response.cookies.delete('oauth_state')
+  
+  // Set logged_out cookie to handle mock mode
+  response.cookies.set('logged_out', 'true', { 
+    httpOnly: true, 
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    maxAge: 60 * 60 * 24 * 7 // 7 days
+  })
 
   return response
 }

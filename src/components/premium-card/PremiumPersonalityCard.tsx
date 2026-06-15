@@ -148,7 +148,7 @@ export function PremiumPersonalityCard({
         ref={cardRef}
         className="relative bg-gradient-to-br from-purple-900 via-black to-pink-900 rounded-3xl overflow-hidden shadow-2xl w-full max-w-md mx-auto"
         style={{
-          aspectRatio: '9/16',
+          minHeight: '600px',
           fontFamily: 'Inter, sans-serif',
         }}
       >
