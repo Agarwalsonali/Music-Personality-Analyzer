@@ -10,7 +10,9 @@ function ChunkLoadRecovery() {
       const reason = event.reason as { name?: string; message?: string } | undefined
       const message = reason?.message ?? ''
       const isChunkError =
-        reason?.name === 'ChunkLoadError' || message.includes('Loading chunk') || message.includes('ChunkLoadError')
+        reason?.name === 'ChunkLoadError' ||
+        message.includes('Loading chunk') ||
+        message.includes('ChunkLoadError')
 
       if (isChunkError) {
         event.preventDefault()
@@ -27,7 +29,13 @@ function ChunkLoadRecovery() {
 
 export function AppProviders({ children }: { children: React.ReactNode }) {
   return (
-    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"        // ← was "dark", now respects OS preference
+      enableSystem                 // ← reads prefers-color-scheme
+      disableTransitionOnChange    // ← prevents flash on theme switch
+      storageKey="theme"           // ← must match layout.tsx inline script
+    >
       <AuthProvider>
         <ChunkLoadRecovery />
         {children}

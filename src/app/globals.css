@@ -3,28 +3,8 @@
 @tailwind utilities;
 
 @layer base {
+  /* Light mode is the default (:root) */
   :root {
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
-    --card: 0 0% 8%;
-    --card-foreground: 0 0% 100%;
-    --primary: 142 71% 45%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 30%;
-    --muted-foreground: 0 0% 70%;
-    --accent: 280 85% 65%;
-    --accent-foreground: 0 0% 0%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 15%;
-    --input: 0 0% 10%;
-    --ring: 142 71% 45%;
-    --radius: 0.5rem;
-  }
-
-  .light {
     --background: 0 0% 100%;
     --foreground: 0 0% 0%;
     --card: 0 0% 95%;
@@ -42,6 +22,36 @@
     --border: 0 0% 85%;
     --input: 0 0% 90%;
     --ring: 142 71% 45%;
+    --radius: 0.5rem;
+  }
+
+  /* Dark mode uses .dark class (applied by next-themes) */
+  .dark {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 100%;
+    --primary: 142 71% 45%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 30%;
+    --muted-foreground: 0 0% 70%;
+    --accent: 280 85% 65%;
+    --accent-foreground: 0 0% 0%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 15%;
+    --input: 0 0% 10%;
+    --ring: 142 71% 45%;
+  }
+
+  /* Prevent background flash before hydration */
+  html {
+    background-color: hsl(0, 0%, 100%);
+  }
+  html.dark {
+    background-color: hsl(0, 0%, 0%);
   }
 
   * {
