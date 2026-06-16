@@ -5,7 +5,9 @@ import { Navbar } from '@/components/layout/navbar'
 import { AuthGuard } from '@/components/auth'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
 import { useAuth } from '@/hooks/useAuth'
+import { useDemo } from '@/contexts/demo-provider'
 import { useMusicAnalysis } from '@/hooks/useMusicAnalysis'
 import { GenreDNA } from '@/components/genre-dna'
 import { MoodSpectrum } from '@/components/mood-spectrum'
@@ -42,7 +44,10 @@ const COLORS = ['#1DB954', '#191414', '#1ed760', '#a0ddce']
 
 function AnalyzerContent() {
   const { user } = useAuth()
+  const { isDemoMode, demoUser } = useDemo()
   const { loading, error, personality, analyzeMusicPersonality } = useMusicAnalysis()
+
+  const displayUser = isDemoMode ? demoUser : user
 
   const alterEgo = personality
     ? quickAlterEgo(
@@ -142,15 +147,17 @@ function AnalyzerContent() {
             className="max-w-4xl mx-auto"
           >
             <div className="text-center mb-12">
+              {isDemoMode && (
+                <Badge className="mb-4 bg-gradient-to-r from-primary to-accent text-white border-0">
+                  Demo Mode — Using Sample Spotify Data
+                </Badge>
+              )}
               <h1 className="text-4xl md:text-5xl font-bold mb-4 gradient-text">Music Personality Analysis</h1>
               <p className="text-muted-foreground text-lg">
-                {user?.display_name
-                  ? `Welcome, ${user.display_name}! Discover your unique music profile`
+                {displayUser?.display_name
+                  ? `Welcome, ${displayUser.display_name}! Discover your unique music profile`
                   : 'Discover your unique music profile'}
               </p>
-              {process.env.NEXT_PUBLIC_USE_MOCK_DATA === 'true' && (
-                <p className="text-sm text-primary mt-2">Demo mode — using mock Spotify data</p>
-              )}
             </div>
 
             {!personality ? (
@@ -159,7 +166,9 @@ function AnalyzerContent() {
                   <div className="text-6xl mb-4">🎵</div>
                   <h2 className="text-2xl font-semibold mb-2">Ready to explore your music personality?</h2>
                   <p className="text-muted-foreground">
-                    Run the analysis using demo listening data — no Spotify Premium required
+                    {isDemoMode
+                      ? 'Analyzing sample Spotify data to demonstrate the full experience'
+                      : 'Run the analysis using your Spotify listening data'}
                   </p>
                 </div>
                 {error && (

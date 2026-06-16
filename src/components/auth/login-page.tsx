@@ -7,7 +7,10 @@
 import { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useAuth } from '@/hooks/useAuth'
+import { useDemo } from '@/contexts/demo-provider'
+import { Button } from '@/components/ui/button'
 import { SpotifyLoginButton } from './spotify-login-button'
+import { Play } from 'lucide-react'
 
 const oauthErrorMessages: Record<string, string> = {
   state_mismatch:
@@ -24,6 +27,7 @@ export function LoginPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { isAuthenticated, loading, error: authError } = useAuth()
+  const { enableDemoMode } = useDemo()
   const [error, setError] = useState<string | null>(null)
 
   // Check for OAuth errors
@@ -40,6 +44,11 @@ export function LoginPage() {
       router.push('/analyzer')
     }
   }, [isAuthenticated, loading, router])
+
+  const handleDemoMode = () => {
+    enableDemoMode()
+    router.push('/analyzer')
+  }
 
   if (loading) {
     return (
@@ -66,11 +75,38 @@ export function LoginPage() {
 
           {(error || authError) && (
             <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4">
-              <p className="text-sm text-destructive">{error ?? authError}</p>
+              <p className="text-sm text-destructive mb-3">{error ?? authError}</p>
+              <Button
+                onClick={handleDemoMode}
+                size="sm"
+                variant="outline"
+                className="w-full border-destructive/50 hover:bg-destructive/10"
+              >
+                <Play className="w-4 h-4 mr-2" />
+                Try Demo Mode Instead
+              </Button>
             </div>
           )}
 
           <div className="space-y-4">
+            <Button
+              onClick={handleDemoMode}
+              size="lg"
+              className="w-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 font-semibold"
+            >
+              <Play className="w-5 h-5 mr-2" />
+              Try Demo Mode
+            </Button>
+
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t border-border" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-card px-2 text-muted-foreground">Or</span>
+              </div>
+            </div>
+
             <SpotifyLoginButton fullWidth size="lg" />
 
             <p className="text-xs text-foreground/50 text-center">

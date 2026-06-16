@@ -2,29 +2,49 @@
 
 import { useState } from 'react'
 import { spotifyService } from '@/services/spotify'
+import { useDemo } from '@/contexts/demo-provider'
+import {
+  getMockTopTracksResponse,
+  getMockTopArtistsResponse,
+  getMockAudioFeatures,
+} from '@/lib/mock/spotify-data'
 import type { SpotifyTrack, MusicPersonality } from '@/types'
 
 export function useMusicAnalysis() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [personality, setPersonality] = useState<MusicPersonality | null>(null)
+  const { isDemoMode } = useDemo()
 
   const analyzeMusicPersonality = async () => {
     try {
       setLoading(true)
       setError(null)
 
-      // Fetch top tracks and artists
-      const [topTracksResponse, topArtistsResponse] = await Promise.all([
-        spotifyService.getTopTracks(50),
-        spotifyService.getTopArtists(50),
-      ])
+      let topTracks: SpotifyTrack[]
+      let topArtists: any[]
+      let audioFeatures: any
 
-      const topTracks = topTracksResponse.items
-      const topArtists = topArtistsResponse.items
+      if (isDemoMode) {
+        // Use mock data in demo mode
+        const topTracksResponse = getMockTopTracksResponse(50)
+        const topArtistsResponse = getMockTopArtistsResponse(50)
+        topTracks = topTracksResponse.items
+        topArtists = topArtistsResponse.items
+        audioFeatures = getMockAudioFeatures(topTracks.map((track) => track.id))
+      } else {
+        // Fetch real data from Spotify
+        const [topTracksResponse, topArtistsResponse] = await Promise.all([
+          spotifyService.getTopTracks(50),
+          spotifyService.getTopArtists(50),
+        ])
 
-      const trackIds = topTracks.map((track: SpotifyTrack) => track.id)
-      const audioFeatures = await spotifyService.getMultipleTracksAudioFeatures(trackIds)
+        topTracks = topTracksResponse.items
+        topArtists = topArtistsResponse.items
+
+        const trackIds = topTracks.map((track: SpotifyTrack) => track.id)
+        audioFeatures = await spotifyService.getMultipleTracksAudioFeatures(trackIds)
+      }
 
       // Calculate personality metrics
       const avgEnergy = audioFeatures.audio_features.reduce((sum: number, af: any) => sum + af.energy, 0) / audioFeatures.audio_features.length
@@ -47,7 +67,7 @@ export function useMusicAnalysis() {
 
       const newPersonality: MusicPersonality = {
         id: Date.now().toString(),
-        userId: 'current_user',
+        userId: isDemoMode ? 'demo_user' : 'current_user',
         genre: primaryGenre,
         mood,
         energy: avgEnergy,

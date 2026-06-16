@@ -3,6 +3,7 @@
 import { useEffect } from 'react'
 import { ThemeProvider } from '@/components/providers/theme-provider'
 import { AuthProvider } from '@/contexts/auth-provider'
+import { DemoProvider } from '@/contexts/demo-provider'
 
 function ChunkLoadRecovery() {
   useEffect(() => {
@@ -37,8 +38,10 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
         storageKey="theme"
       >
       <AuthProvider>
-        <ChunkLoadRecovery />
-        {children}
+        <DemoProvider>
+          <ChunkLoadRecovery />
+          {children}
+        </DemoProvider>
       </AuthProvider>
     </ThemeProvider>
   )

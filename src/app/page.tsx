@@ -3,10 +3,12 @@
 import { useEffect, useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useTheme } from 'next-themes'
 import { Button } from '@/components/ui/button'
 import { Navbar } from '@/components/layout/navbar'
-import { Music, Brain, Sparkles, TrendingUp, Users, Zap, Play, ArrowRight } from 'lucide-react'
+import { useDemo } from '@/contexts/demo-provider'
+import { Music, Brain, Sparkles, TrendingUp, Users, Play, ArrowRight } from 'lucide-react'
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
@@ -14,10 +16,17 @@ export default function Home() {
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0])
   const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.8])
   const { theme } = useTheme()
+  const router = useRouter()
+  const { enableDemoMode } = useDemo()
 
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  const handleDemoMode = () => {
+    enableDemoMode()
+    router.push('/analyzer')
+  }
 
   if (!mounted) {
     return null
@@ -139,20 +148,29 @@ export default function Home() {
               initial="hidden"
               animate='visible'
             >
+              <Button
+                size="lg"
+                onClick={handleDemoMode}
+                className="w-full sm:w-auto text-lg px-8 py-6 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 rounded-full font-semibold shadow-lg shadow-primary/25 transition-all hover:scale-105"
+              >
+                <Play className="w-5 h-5 mr-2" />
+                Try Demo Mode
+              </Button>
               <Link href="/analyzer">
                 <Button
                   size="lg"
-                  className="w-full sm:w-auto text-lg px-8 py-6 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 rounded-full font-semibold shadow-lg shadow-primary/25 transition-all hover:scale-105"
+                  variant="outline"
+                  className="w-full sm:w-auto text-lg px-8 py-6 rounded-full border-2 border-border hover:border-primary/50 backdrop-blur-sm transition-all hover:scale-105"
                 >
-                  <Play className="w-5 h-5 mr-2" />
-                  Start Your Journey
+                  <Music className="w-5 h-5 mr-2" />
+                  Connect Spotify
                 </Button>
               </Link>
               <Link href="/about">
                 <Button
                   size="lg"
-                  variant="outline"
-                  className="w-full sm:w-auto text-lg px-8 py-6 rounded-full border-2 border-border hover:border-primary/50 backdrop-blur-sm transition-all hover:scale-105"
+                  variant="ghost"
+                  className="w-full sm:w-auto text-lg px-8 py-6 rounded-full transition-all hover:scale-105"
                 >
                   Learn More
                   <ArrowRight className="w-5 h-5 ml-2" />
@@ -363,7 +381,7 @@ export default function Home() {
           </motion.div>
         </section>
 
-        {/* Spotify Login CTA Section */}
+        {/* Demo Mode CTA Section */}
         <section className="relative container-custom py-32">
           <motion.div
             className="max-w-4xl mx-auto relative"
@@ -380,56 +398,44 @@ export default function Home() {
             />
 
             <div className={`relative rounded-3xl p-8 md:p-16 backdrop-blur-sm overflow-hidden ${theme === 'dark' ? 'bg-gradient-to-br from-black to-gray-900 border border-white/10' : 'bg-gradient-to-br from-white to-gray-100 border border-border'}`}>
-              {/* Spotify Logo Animation */}
-              <motion.div
-                className="absolute top-8 right-8"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-              >
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
-                  <Music className="w-8 h-8 text-white" />
-                </div>
-              </motion.div>
-
               <div className="text-center relative z-10">
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ type: 'spring', duration: 0.8, delay: 0.2 }}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/20 border border-green-500/30 mb-8"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 border border-primary/30 mb-8"
                 >
-                  <Zap className="w-4 h-4 text-green-400" />
-                  <span className="text-sm font-medium text-green-400">Powered by Spotify</span>
+                  <Sparkles className="w-4 h-4 text-primary" />
+                  <span className="text-sm font-medium text-primary">No Spotify Required</span>
                 </motion.div>
 
                 <h2 className="text-4xl md:text-6xl font-black mb-6">
-                  Ready to Discover
-                  <span className="block bg-gradient-to-r from-green-400 to-green-600 bg-clip-text text-transparent">
-                    Your Music Personality?
+                  Try Demo Mode
+                  <span className="block bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                    Instant Results
                   </span>
                 </h2>
 
                 <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">
-                  Connect your Spotify account in seconds and get instant insights about your unique musical identity.
+                  Experience the full music personality analysis with sample data — no account needed. Perfect for testing and exploration.
                 </p>
 
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Link href="/analyzer">
-                    <Button
-                      size="lg"
-                      className="w-full sm:w-auto text-xl px-12 py-8 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 rounded-full font-bold shadow-lg shadow-green-500/25 transition-all"
-                    >
-                      <Music className="w-6 h-6 mr-3" />
-                      Connect with Spotify
-                    </Button>
-                  </Link>
+                  <Button
+                    size="lg"
+                    onClick={handleDemoMode}
+                    className="w-full sm:w-auto text-xl px-12 py-8 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 rounded-full font-bold shadow-lg shadow-primary/25 transition-all"
+                  >
+                    <Play className="w-6 h-6 mr-3" />
+                    Try Demo Mode Now
+                  </Button>
                 </motion.div>
 
                 <p className="mt-6 text-sm text-muted-foreground">
-                  Secure authentication • No data stored • Free to use
+                  Instant access • Full features • No signup required
                 </p>
               </div>
             </div>

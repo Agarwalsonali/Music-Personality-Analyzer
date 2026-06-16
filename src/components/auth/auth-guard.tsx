@@ -1,6 +1,7 @@
 /**
  * Auth Guard Component
  * Protects pages that require authentication
+ * Allows demo mode to bypass authentication
  */
 
 'use client'
@@ -8,6 +9,7 @@
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { useAuth } from '@/hooks/useAuth'
+import { useDemo } from '@/contexts/demo-provider'
 
 export interface AuthGuardProps {
   children: React.ReactNode
@@ -16,12 +18,13 @@ export interface AuthGuardProps {
 export function AuthGuard({ children }: AuthGuardProps) {
   const router = useRouter()
   const { isAuthenticated, loading } = useAuth()
+  const { isDemoMode } = useDemo()
 
   useEffect(() => {
-    if (!loading && !isAuthenticated) {
+    if (!loading && !isAuthenticated && !isDemoMode) {
       router.push('/login')
     }
-  }, [isAuthenticated, loading, router])
+  }, [isAuthenticated, loading, isDemoMode, router])
 
   if (loading) {
     return (
@@ -37,7 +40,7 @@ export function AuthGuard({ children }: AuthGuardProps) {
     )
   }
 
-  if (!isAuthenticated) {
+  if (!isAuthenticated && !isDemoMode) {
     return null
   }
 

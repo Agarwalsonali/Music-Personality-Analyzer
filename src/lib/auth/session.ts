@@ -13,9 +13,9 @@ interface TokenResponse {
 
 export function getCanonicalOrigin(): string {
   try {
-    return new URL(process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI || 'http://127.0.0.1:3000/api/auth/callback').origin
+    return new URL(process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI || 'https://music-personality-analyzer-un4r.vercel.app/api/auth/callback').origin
   } catch {
-    return 'http://127.0.0.1:3000'
+    return 'https://music-personality-analyzer-un4r.vercel.app/'
   }
 }
 
