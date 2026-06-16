@@ -77,13 +77,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       const loginResponse = await fetch('/api/auth/login', { credentials: 'include' })
       if (!loginResponse.ok) {
-        throw new Error('Failed to initiate login')
+        throw new Error('Spotify Integration Currently Unavailable')
       }
 
       const { authUrl } = (await loginResponse.json()) as { authUrl: string }
       window.location.href = authUrl
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Login failed'
+      const errorMessage = error instanceof Error ? error.message : 'Spotify Integration Currently Unavailable'
       setAuthState((prev) => ({
         ...prev,
         loading: false,

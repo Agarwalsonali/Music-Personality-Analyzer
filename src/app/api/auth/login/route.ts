@@ -53,7 +53,7 @@ export async function GET(_request: NextRequest): Promise<NextResponse> {
     console.error('Auth login error:', error)
     return NextResponse.json(
       {
-        error: 'Failed to initiate login',
+        error: 'Spotify Integration Currently Unavailable',
       },
       { status: 500 }
     )
